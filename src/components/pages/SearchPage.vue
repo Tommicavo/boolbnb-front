@@ -1,6 +1,6 @@
 <script>
 import axios from 'axios';
-const searchForm = { title: '', minBed: '1', minRoom: '1', services: [] };
+const searchForm = { title: '', minBed: '1', minRoom: '1', services: {} };
 export default {
   name: 'EstateDetail',
   data() {
@@ -25,6 +25,15 @@ export default {
         })
         .catch(err => { console.log(err) })
       // .then(() => { })
+    },
+    sendForm() {
+      const endpoint = 'http://127.0.0.1:8000/api/services/filter';
+      axios.post(endpoint, this.form)
+        .then(res => {
+          this.form = res.data;
+          console.log(this.form)
+        })
+        .catch(err => { console.log(err) })
     }
 
   },
@@ -38,7 +47,7 @@ export default {
 <template>
   <section class="container">
     <h1 class="my-4">Search Page</h1>
-    <form class="row gy-2 gx-3 align-items-center">
+    <form class="row gy-2 gx-3 align-items-center" @submit.prevent="sendForm">
       <div class="col-auto">
         <label class="visually-hidden">Stanze</label>
         <input type="tel" class="form-control" placeholder="n stanze" v-model="form.minRoom">
