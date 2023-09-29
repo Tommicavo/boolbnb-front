@@ -1,0 +1,22 @@
+@use './partials/mixin';
+@use './partials/vars';
+@use './partials/resets';
+
+// Body 
+body {
+    font-family: 'Montserrat Variable', sans-serif;
+}
+
+// All the <a>
+a {
+    text-decoration: none;
+}
+
+// All list
+ul li {
+    list-style-type: none;
+}
+
+ul {
+    padding: 0;
+}
