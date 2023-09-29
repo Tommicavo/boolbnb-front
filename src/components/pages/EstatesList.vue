@@ -2,16 +2,18 @@
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
 import AppLoader from '@/components/AppLoader.vue';
+import SearchForm from '../SearchForm.vue';
 
 // Api Endpoints
 const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
-    components: { AppCard, AppLoader },
+    components: { AppCard, AppLoader, SearchForm },
     data() {
         return {
             estates: [],
-            apiLoading: false
+            apiLoading: false,
+            EstateFilter: ''
         }
     },
     methods: {
@@ -25,6 +27,24 @@ export default {
                 })
                 .catch(err => { console.log(err) })
                 .then(() => { this.apiLoading = false })
+        },
+
+        /* FUNZIONE CHE TIENE TRACCIA DEL TESTO */
+        onTermChange(term) {
+            this.EstateFilter = term
+        },
+
+
+        searchEstate(baseEndpoint = 'http://127.0.0.1:8000/api/estates/') {
+            this.apiLoading = true;
+
+            axios.get(`${baseEndpoint}filter-by-title/${this.EstateFilter}`)
+                .then(res => {
+                    this.estates = res.data.results;
+                    console.log(res.data.results)
+                }).catch(err => { console.log(err) })
+                .then(() => { this.apiLoading = false })
+
         }
     },
     created() {
@@ -38,6 +58,9 @@ export default {
     <main v-else class="container">
 
         <div class="container">
+
+            <SearchForm @term-change="onTermChange" @form-submit="searchEstate" />
+
             <!-- Hide if empty -->
             <div v-if="estates.length" class="row">
 
