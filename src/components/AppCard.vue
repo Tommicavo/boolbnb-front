@@ -17,7 +17,7 @@ export default {
 </script>
 
 <template>
-    <div class="card col-2 m-3 text-bg-dark">
+    <div class="card m-3 text-bg-dark" :class="[isDetail ? 'col-12' : 'col-2']">
 
         <img :src="getImagePath" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
