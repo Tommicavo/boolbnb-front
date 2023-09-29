@@ -1,6 +1,6 @@
 <script>
-import AppHeader from './components/AppHeader.vue'
-import BasicMap from './components/BasicMap.vue'
+import AppHeader from '@/components/AppHeader.vue'
+import BasicMap from '@/components/BasicMap.vue'
 
 export default {
   name: 'BoolBnB',
