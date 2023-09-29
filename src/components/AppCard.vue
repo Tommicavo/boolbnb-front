@@ -12,7 +12,7 @@ export default {
         <img :src="data.thumb" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
-                <h5 class="card-title">{{ data.name }}</h5>
+                <h5 class="card-title">{{ data.title }}</h5>
                 <p class="card-text">{{ data.description }}</p>
             </div>
 
