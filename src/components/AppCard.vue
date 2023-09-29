@@ -17,7 +17,7 @@ export default {
 </script>
 
 <template>
-    <div class="card col-12 m-3 text-bg-dark">
+    <div class="card col-2 m-3 text-bg-dark">
 
         <!-- !SET IMAGE -->
         <img :src="getImagePath" class="card-img-top" alt="...">
