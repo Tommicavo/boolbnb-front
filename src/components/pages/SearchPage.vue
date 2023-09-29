@@ -4,7 +4,7 @@ const searchForm = { title: '', minBed: '1', minRoom: '1', services: {} };
 export default {
   name: 'EstateDetail',
   data() {
-    return { form: searchForm, services: [] }
+    return { form: searchForm, services: [], estates: [] }
   },
   components: {},
   props: {},
@@ -30,7 +30,9 @@ export default {
       const endpoint = 'http://127.0.0.1:8000/api/services/filter';
       axios.post(endpoint, this.form)
         .then(res => {
-          this.form = res.data;
+
+          this.estates = res.data.results;
+
           console.log(this.form)
         })
         .catch(err => { console.log(err) })
@@ -70,6 +72,13 @@ export default {
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
     </form>
+    <div>
+      <ul>
+        <li v-for="estate in estates">
+          {{ estate.title }}
+        </li>
+      </ul>
+    </div>
   </section>
 </template>
 
