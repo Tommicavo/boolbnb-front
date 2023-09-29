@@ -3,7 +3,16 @@ import { RouterLink } from 'vue-router';
 
 export default {
     props: { data: Object, isDetail: Boolean },
-    components: { RouterLink }
+    components: { RouterLink },
+    computed: {
+        getImagePath() {
+            if (this.data.images[0]) {
+                const url = this.data.images[0].url;
+                return `http://127.0.0.1:8000/storage/${url}`;
+            }
+        }
+    }
+
 }
 </script>
 
@@ -11,7 +20,7 @@ export default {
     <div class="card col-12 m-3 text-bg-dark">
 
         <!-- !SET IMAGE -->
-        <!-- <img :src="data.url" class="card-img-top" alt="..."> -->
+        <img :src="getImagePath" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
                 <h5 class="card-title">{{ data.title }}</h5>
