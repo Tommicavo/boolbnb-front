@@ -17,20 +17,21 @@ export default {
         .then(res => {
           this.services = res.data;
           this.services.forEach(service => {
-            this.form.services.push({ `${service.label}`: false });
-        });
+            this.form.services[service.label] = false;
+          });
 
-      console.log(this.services)
-    })
+          console.log(this.services);
+          console.log(this.form.services);
+        })
         .catch(err => { console.log(err) })
-    // .then(() => { })
+      // .then(() => { })
+    }
+
+  },
+  created() {
+    this.fetchServices();
+
   }
-
-},
-created() {
-  this.fetchServices();
-
-}
 }
 </script>
 
@@ -51,7 +52,7 @@ created() {
       <div class="col-auto">
         <div class="d-flex justify-content-start">
           <div class="form-check form-check-inline" v-for="service in services" :key="service.label">
-            <input class="form-check-input" type="checkbox">
+            <input class="form-check-input" type="checkbox" v-model="form.services[service.label]">
             <label class="form-check-label" for="">{{ service.label }}</label>
           </div>
         </div>
