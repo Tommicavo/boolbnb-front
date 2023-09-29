@@ -19,7 +19,6 @@ export default {
 <template>
     <div class="card col-2 m-3 text-bg-dark">
 
-        <!-- !SET IMAGE -->
         <img :src="getImagePath" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
@@ -27,13 +26,11 @@ export default {
                 <p class="card-text">{{ data.description }}</p>
             </div>
 
-            <!-- !ACTIVATE AFTER SHOW COMPLETED -->
-
             <!-- Show Button -->
-            <!-- <RouterLink v-if="!isDetail" :to="{ name: 'estate-detail', params: { id: data.id } }"
+            <RouterLink v-if="!isDetail" :to="{ name: 'estate-detail', params: { id: data.id } }"
                 class="btn btn-outline-primary mx-3">
                 <i class="fa-solid fa-eye"></i>
-            </RouterLink> -->
+            </RouterLink>
 
         </div>
     </div>
