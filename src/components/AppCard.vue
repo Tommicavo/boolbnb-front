@@ -22,7 +22,7 @@ export default {
         <img :src="getImagePath" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
-                <img src="../assets/heart" alt="">
+                <div class="heart"> &#9825;</div>
                 <h5 class="card-title">{{ data.title }}</h5>
                 <p class="card-text">{{ data.description }}</p>
             </div>
@@ -38,10 +38,14 @@ export default {
 
 <style>
 .heart {
-    color: black;
+    width: 10px;
+    height: 15px;
     position: absolute;
-    border: 1px solid white;
     top: 5px;
-    right: 0px;
+    right: 15px;
+}
+
+.heart:hover {
+    color: red;
 }
 </style>
