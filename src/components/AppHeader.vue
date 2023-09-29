@@ -4,7 +4,7 @@
         <nav class="container">
             <ul class="me-auto mb-2 mb-lg-0 ">
                 <li>
-                    <RouterLink class="nav-link active" :to="{ name: 'estates' }">Immobili</RouterLink>
+                    <RouterLink class="nav-link active" :to="{ name: 'estates' }">Annunci</RouterLink>
                 </li>
             </ul>
         </nav>
