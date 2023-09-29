@@ -19,8 +19,9 @@ export default {
             this.apiLoading = true;
             axios.get(baseEndpoint)
                 .then(res => {
-                    const { data, links } = res.data;
-                    this.estates = { data, links };
+                    this.estates = res.data.results;
+                    console.log(this.estates)
+
                 })
                 .catch(err => { console.log(err) })
                 .then(() => { this.apiLoading = false })
@@ -38,10 +39,10 @@ export default {
 
         <div class="container">
             <!-- Hide if empty -->
-            <div v-if="estates.data.length" class="row">
+            <div v-if="estates.length" class="row">
 
                 <!-- Dynamic Card Here -->
-                <AppCard v-for="estate in estates.data" :key="estate.id" :data="estate" />
+                <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
 
                 <!-- Pagination Navbar -->
                 <!-- <nav>
@@ -64,4 +65,4 @@ export default {
     </main>
 </template>
 
-<style></style>
+<style></style>d
