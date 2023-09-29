@@ -28,8 +28,7 @@ export default {
 
             <!-- Show Button -->
             <RouterLink v-if="!isDetail" :to="{ name: 'estate-detail', params: { id: data.id } }"
-                class="btn btn-outline-primary mx-3">
-                <i class="fa-solid fa-eye"></i>
+                class="btn btn-outline-primary mx-3">Dettaglio
             </RouterLink>
 
         </div>
