@@ -2,9 +2,12 @@
 <template>
     <header class="d-flex align-items-center justify-content-center">
         <nav class="container">
-            <ul class="me-auto mb-2 mb-lg-0 ">
+            <ul class="me-auto mb-2 d-flex gap-3 ">
                 <li>
                     <RouterLink class="nav-link active" :to="{ name: 'estates' }">Annunci</RouterLink>
+                </li>
+                <li>
+                    <RouterLink class="nav-link active" :to="{ name: 'search-page' }">Ricerca Avanzata</RouterLink>
                 </li>
             </ul>
         </nav>
