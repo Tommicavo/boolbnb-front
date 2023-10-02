@@ -41,10 +41,10 @@ export default {
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imagesCarousel" data-bs-slide="prev">
-                <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-backward" /></span>
+                <span :class="{'d-none' : estate.images}" class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-backward" /></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#imagesCarousel" data-bs-slide="next">
-                <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-forward" /></span>
+                <span :class="{'d-none' : estate.images}" class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-forward" /></span>
             </button>
         </div>
         
