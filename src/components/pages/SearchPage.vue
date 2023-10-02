@@ -44,6 +44,12 @@ export default {
     },
     displayedEstates() {
       return this.filteredEstates.filter(estate => {
+
+        // Filtra per il numero minimo di stanze
+        if (estate.rooms < this.form.minRooms) return false;
+
+        // Filtra per il numero minimo di letti
+        if (estate.beds < this.form.minBeds) return false;
         return Object.keys(this.form.services).every(serviceKey => {
           if (!this.form.services[serviceKey]) return true;
           return estate.services.some(service => service.label === serviceKey);
@@ -71,8 +77,6 @@ export default {
       axios.post(endpoint, this.form)
         .then(res => {
           this.filteredEstates = res.data.withinRadiusEstates;
-          console.log('Filtered Estates: ', this.filteredEstates);
-          console.log(res.data);
         })
         .catch(err => { console.error(err) })
     },
@@ -108,7 +112,6 @@ export default {
       this.isAddressSelected = true;
       document.getElementById('filtersBtn').removeAttribute('disabled');
       document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
-      // console.log(`PLACE\naddress: ${this.form.place.address}\nlon: ${this.form.place.lon}\nlat: ${this.form.place.lat}`);
     },
     resetAddress() {
       this.form.place.address = '';
@@ -190,7 +193,7 @@ export default {
               </div>
               <!-- min beds -->
               <div class="col-2 mb-3">
-                <label for="minBeds" class="form-label">Camere</label>
+                <label for="minBeds" class="form-label">Letti</label>
                 <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds">
               </div>
               <!-- services -->
@@ -206,9 +209,8 @@ export default {
 
               <!-- Buttons -->
               <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
-                <!-- <button type="button" class="btn btn-warning" @click="initForm"
-                  :disabled="isFilterReset">Ripristina</button>
-                <button id="filtersBtn" type="submit" class="btn btn-primary" disabled>Trova Alloggi</button> -->
+                <!-- <button type="button" class="btn btn-warning" @click="initForm" :disabled="isFilterReset" hidden></button> -->
+                <button id="filtersBtn" type="submit" class="btn btn-primary d-none" disabled></button>
               </div>
             </div>
           </form>
@@ -217,14 +219,14 @@ export default {
 
       <!-- Results -->
       <div v-if="filteredEstatesReady" class="results">
-        <h2 class="my-2">Results</h2>
+        <h2 class="my-2">Risultati</h2>
 
         <table class="table">
           <thead>
             <tr>
               <th scope="col" width="35%">Alloggio</th>
               <th scope="col" width="10%">Stanze</th>
-              <th scope="col" width="10%">Bagni</th>
+              <th scope="col" width="10%">Letti</th>
               <th scope="col" width="35%">Servizi</th>
               <th scope="col" width="10%">Distanza</th>
             </tr>
