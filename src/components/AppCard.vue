@@ -50,5 +50,6 @@ export default {
 .heart:hover {
     color: #FFBD59;
     opacity: 1;
+    cursor: pointer;
 }
 </style>

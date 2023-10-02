@@ -8,6 +8,9 @@
             <ul class="me-auto mb-2 mb-lg-0 nav1 d-flex align-items-center ">
                 <img src="../assets/assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
                 <li>
+                    <div class="research ">Home</div>
+                </li>
+                <li>
                     <RouterLink class="nav-link active a1" :to="{ name: 'estates' }">Annunci</RouterLink>
                 </li>
                 <li>
@@ -62,7 +65,13 @@ header {
 }
 
 .research {
-    margin-left: 65px;
+    margin-left: 25px;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.research:hover {
+    color: #FFBD59;
 }
 
 .logo {

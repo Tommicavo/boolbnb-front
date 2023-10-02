@@ -23,6 +23,14 @@ a {
 a:hover {
     color: #FFBD59;
 }
+li{
+    
+    transition: color 0.3s ease;
+}
+li:hover{
+
+    color: #FFBD59;
+}
 
 #menuToggle {
     display: block;
@@ -60,7 +68,7 @@ a:hover {
     margin-bottom: 5px;
     position: relative;
 
-    background: #213644;
+    background: #FFBD59;
     border-radius: 3px;
 
     z-index: 1;
