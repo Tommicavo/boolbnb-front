@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router';
 
 export default {
-    props: { data: Object, isDetail: Boolean },
+    props: { data: Object },
     components: { RouterLink },
     computed: {
         getImagePath() {
@@ -12,12 +12,11 @@ export default {
             }
         }
     }
-
 }
 </script>
 
 <template>
-    <div class="card m-3 text-bg-dark" :class="[isDetail ? 'col-12' : 'col-2']">
+    <div class="card m-3 text-bg-dark">
 
         <img :src="getImagePath" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
@@ -27,7 +26,7 @@ export default {
             </div>
 
             <!-- Show Button -->
-            <RouterLink v-if="!isDetail" :to="{ name: 'estate-detail', params: { id: data.id } }"
+            <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }"
                 class="btn btn-outline-primary mx-3">Dettaglio
             </RouterLink>
 

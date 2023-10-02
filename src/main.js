@@ -15,6 +15,8 @@ import { faKitchenSet } from '@fortawesome/free-solid-svg-icons'
 import { faTv } from '@fortawesome/free-solid-svg-icons'
 import { faWaterLadder } from '@fortawesome/free-solid-svg-icons'
 import { faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faBackward } from '@fortawesome/free-solid-svg-icons'
+import { faForward } from '@fortawesome/free-solid-svg-icons'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -22,7 +24,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 // Generics Components
 
-library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie);
+library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward);
 
 // App
 const app = createApp(App);
