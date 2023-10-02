@@ -2,19 +2,17 @@
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
 import AppLoader from '@/components/AppLoader.vue';
-import SearchForm from '@/components/SearchForm.vue';
 
 const searchForm = {
     place: { address: '', lon: null, lat: null },
     radius: '20',
-
 };
 
 // Api Endpoints
 const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
-    components: { AppCard, AppLoader, SearchForm },
+    components: { AppCard, AppLoader },
     data() {
         return {
             form: searchForm,
@@ -23,7 +21,6 @@ export default {
             estates: [],
             apiLoading: false,
             timeoutId: null,
-
         }
     },
     computed: {
@@ -88,7 +85,6 @@ export default {
                 .then(res => {
                     this.estates = res.data.results;
                     console.log(this.estates)
-
                 })
                 .catch(err => { console.log(err) })
                 .then(() => { this.apiLoading = false })
@@ -138,10 +134,9 @@ export default {
                                     placeholder="Scegli un indirizzo da cercare" v-model="form.place.address"
                                     @keyup="fetchAddress($event.target.value)">
                                 <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
-                                        class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
-
+                                        class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
+                                </div>
                             </div>
-
                         </div>
                         <button id="filtersBtn" type="submit" class="my-3 col-2 btn btn-primary " disabled>Trova
                             Alloggi</button>
