@@ -10,12 +10,42 @@
                 <li>
                     <RouterLink class="nav-link active a1" :to="{ name: 'estates' }">Annunci</RouterLink>
                 </li>
+
+
             </ul>
+            <nav role='navigation'>
+                <div id="menuToggle" class="hamburger">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+
+                    <ul id="menu">
+                        <a href="#">
+                            <li class="hamburger_li">Registrati</li>
+                        </a>
+                        <a href="#">
+                            <li class="hamburger_li">Accedi</li>
+                        </a>
+                        <a href="#">
+                            <li class="hamburger_li">Affitta con BoolBnb</li>
+                        </a>
+
+                    </ul>
+                </div>
+            </nav>
         </nav>
+
     </header>
 </template>
 <style scoped lang="scss">
 @use '../assets/scss/partials/_vars.scss' as *;
+
+.hamburger {
+    margin-bottom: 20px;
+
+}
 
 header {
     background: rgb(2, 0, 36);
@@ -28,12 +58,7 @@ header {
     margin-left: 25px;
 }
 
-.nav1 {
-    color: #ffffff;
-    font-size: 1.4rem;
-    border-radius: 1px solid white;
-    ;
-}
+
 
 .logo {
     max-height: 330px;
@@ -43,5 +68,12 @@ header {
 
 ul {
     padding: 0;
+
+}
+
+.nav1 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    ;
 }
 </style>
