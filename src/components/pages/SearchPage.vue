@@ -1,8 +1,8 @@
 <script>
 import axios from 'axios';
 const searchForm = {
-  place: {address: '', lon: null, lat: null},
-  radius: '100',
+  place: { address: '', lon: null, lat: null },
+  radius: '20',
   minBeds: '1',
   minRooms: '1',
   services: {}
@@ -22,23 +22,22 @@ export default {
   components: {},
   props: {},
   computed: {
-    isAddressFieldEmpty(){
+    isAddressFieldEmpty() {
       if (!this.form.place.address) {
         this.suggestedAddresses = [];
         return true;
       }
       return false;
     },
-    filteredEstatesReady(){
+    filteredEstatesReady() {
       return Boolean(this.filteredEstates.length);
     },
-    isFilterReset(){
+    isFilterReset() {
       if (this.form.place.address == '' &&
-      this.form.radius == '100' &&
-      this.form.minRooms == '1' &&
-      this.form.minBeds == '1' &&
-      Object.keys(this.form.services).length === 0)
-      {
+        this.form.radius == '20' &&
+        this.form.minRooms == '1' &&
+        this.form.minBeds == '1' &&
+        Object.keys(this.form.services).length === 0) {
         return true;
       }
       return false;
@@ -69,7 +68,7 @@ export default {
         })
         .catch(err => { console.error(err) })
     },
-    fetchAddress(address){
+    fetchAddress(address) {
       const baseUri = 'https://api.tomtom.com/search/2/search/';
       const params = '.json?limit=5&countrySet=IT';
       const apiKey = '&key=GhG6A9t2m9I7jUfG0xLAixmH1Nk7leZa';
@@ -83,17 +82,17 @@ export default {
         // console.log(endpoint);
 
         axios.get(endpoint)
-        .then(res => {
-          const results = res.data.results;
-          // console.log('results: ', results);
-          results.forEach(result => {
-            // console.log('result: ', result.address.freeformAddress);
-            this.suggestedAddresses.push(result);
+          .then(res => {
+            const results = res.data.results;
+            // console.log('results: ', results);
+            results.forEach(result => {
+              // console.log('result: ', result.address.freeformAddress);
+              this.suggestedAddresses.push(result);
+            })
           })
-        })
       }, 500);
     },
-    selectPlace(address){
+    selectPlace(address) {
       this.suggestedAddresses = [];
       this.form.place.address = address.address.freeformAddress;
       this.form.place.lon = address.position.lon;
@@ -103,7 +102,7 @@ export default {
       document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
       // console.log(`PLACE\naddress: ${this.form.place.address}\nlon: ${this.form.place.lon}\nlat: ${this.form.place.lat}`);
     },
-    resetAddress(){
+    resetAddress() {
       this.form.place.address = '';
       this.form.place.lon = null;
       this.form.place.lat = null;
@@ -112,12 +111,12 @@ export default {
       document.getElementById('searchAddress').removeAttribute('readonly');
       document.getElementById('searchAddress').focus();
     },
-    printDistance(distance){
+    printDistance(distance) {
       return distance.toFixed(2);
     },
-    initForm(){
+    initForm() {
       this.resetAddress();
-      this.form.radius = '100';
+      this.form.radius = '20';
       this.form.minRooms = '1';
       this.form.minBeds = '1';
       this.form.services = {};
@@ -126,7 +125,7 @@ export default {
   created() {
     this.fetchServices();
   },
-  beforeRouteEnter(to, from, next){
+  beforeRouteEnter(to, from, next) {
     const callback = vm => {
       vm.form.place.address = '';
     }
@@ -151,20 +150,23 @@ export default {
                 <div class="addresses">
                   <label for="searchAddress" class="form-label">Cerca un indirizzo o una città</label>
                   <div class="d-flex align-items-center position-relative">
-                    <input id="searchAddress" type="text" class="form-control" placeholder="Inizia a scrivere un indirizzo"
-                      v-model="form.place.address" @keyup="fetchAddress($event.target.value)">
-                    <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
+                    <input id="searchAddress" type="text" class="form-control"
+                      placeholder="Inizia a scrivere un indirizzo" v-model="form.place.address"
+                      @keyup="fetchAddress($event.target.value)">
+                    <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
+                        class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
                   </div>
                 </div>
                 <div class="suggestedAddresses">
                   <ul class="list-group">
-                    <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)" class="liAddress list-group-item">
+                    <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
+                      class="liAddress list-group-item">
                       <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
                     </li>
                   </ul>
                 </div>
               </div>
-    
+
               <!-- radius -->
               <div class="col-2 mb-3">
                 <label for="radius" class="form-label">Nel raggio di</label>
@@ -184,17 +186,20 @@ export default {
                 <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds">
               </div>
               <!-- services -->
-              <div  class="col-12 text-center mb-3">
+              <div class="col-12 text-center mb-3">
                 <h4 class="py-3">Seleziona i servizi che desideri</h4>
                 <div v-for="service in services" :key="service.id" class="form-check form-check-inline">
                   <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]">
-                  <label :for="service.label"><font-awesome-icon :class="['iconService', {'iconSelected' : form.services[service.label]}]" :icon="'fa-solid fa-' + service.icon" /></label>
+                  <label :for="service.label"><font-awesome-icon
+                      :class="['iconService', { 'iconSelected': form.services[service.label] }]"
+                      :icon="'fa-solid fa-' + service.icon" /></label>
                 </div>
               </div>
-    
+
               <!-- Buttons -->
               <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
-                <button type="button" class="btn btn-warning" @click="initForm" :disabled="isFilterReset" >Ripristina</button>
+                <button type="button" class="btn btn-warning" @click="initForm"
+                  :disabled="isFilterReset">Ripristina</button>
                 <button id="filtersBtn" type="submit" class="btn btn-primary" disabled>Trova Alloggi</button>
               </div>
             </div>
@@ -239,37 +244,43 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.iconService{
+.iconService {
   padding: 10px;
   font-size: 1.6rem;
   font-weight: 500;
   border: 2px solid transparent;
+
+  &:hover {
+    color: #28a745;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+  }
 }
 
-.iconService.small{
+.iconService.small {
   font-size: 1rem;
 }
 
-.iconSelected{
+.iconSelected {
   color: #28a745;
   border: 2px solid #28a745;
   border-radius: 8px;
 }
 
-.form-label{
+.form-label {
   font-size: 1.2rem;
   font-weight: 500;
 }
 
-.input-group-text{
+.input-group-text {
   background-color: white;
 }
 
-.card-body{
+.card-body {
   box-shadow: 5px 5px 5px 2px darkgray;
 }
 
-.filterSearchCard{
+.filterSearchCard {
   border-radius: 1rem;
 }
 </style>

@@ -2,7 +2,7 @@
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
 import AppLoader from '@/components/AppLoader.vue';
-import SearchForm from '../SearchForm.vue';
+import SearchForm from '@/components/SearchForm.vue';
 
 // Api Endpoints
 const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
