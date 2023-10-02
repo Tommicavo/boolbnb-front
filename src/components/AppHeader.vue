@@ -10,6 +10,10 @@
                 <li>
                     <RouterLink class="nav-link active a1" :to="{ name: 'estates' }">Annunci</RouterLink>
                 </li>
+                <li>
+                    <div class="research">Ricerca avanzata</div>
+                </li>
+
 
 
             </ul>
@@ -57,7 +61,9 @@ header {
     margin-left: 25px;
 }
 
-
+.research {
+    margin-left: 65px;
+}
 
 .logo {
     max-height: 330px;
