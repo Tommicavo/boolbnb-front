@@ -1,13 +1,15 @@
 <script>
 import AppHeader from '@/components/AppHeader.vue'
 import BasicMap from '@/components/BasicMap.vue'
+import AppFooter from '@/components/AppFooter.vue'
 
 export default {
   name: 'BoolBnB',
   data() {
     return {}
   },
-  components: { AppHeader }
+  components: { AppHeader, AppFooter }
+
 }
 
 </script>
@@ -16,6 +18,7 @@ export default {
   <!-- Header -->
   <AppHeader />
   <RouterView></RouterView>
+  <AppFooter />
 </template>
 
 <style lang="scss">
