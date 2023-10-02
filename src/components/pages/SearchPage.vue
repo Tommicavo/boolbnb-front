@@ -41,6 +41,14 @@ export default {
         return true;
       }
       return false;
+    },
+    displayedEstates() {
+      return this.filteredEstates.filter(estate => {
+        return Object.keys(this.form.services).every(serviceKey => {
+          if (!this.form.services[serviceKey]) return true;
+          return estate.services.some(service => service.label === serviceKey);
+        });
+      });
     }
   },
   methods: {
@@ -198,9 +206,9 @@ export default {
 
               <!-- Buttons -->
               <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
-                <button type="button" class="btn btn-warning" @click="initForm"
+                <!-- <button type="button" class="btn btn-warning" @click="initForm"
                   :disabled="isFilterReset">Ripristina</button>
-                <button id="filtersBtn" type="submit" class="btn btn-primary" disabled>Trova Alloggi</button>
+                <button id="filtersBtn" type="submit" class="btn btn-primary" disabled>Trova Alloggi</button> -->
               </div>
             </div>
           </form>
@@ -222,7 +230,7 @@ export default {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="estate in filteredEstates" :key="estate.id" height="50">
+            <tr v-for="estate in displayedEstates" :key="estate.id" height="50">
               <td> {{ estate.title }} </td>
               <td> {{ estate.rooms }} </td>
               <td> {{ estate.beds }} </td>
@@ -249,11 +257,15 @@ export default {
   font-size: 1.6rem;
   font-weight: 500;
   border: 2px solid transparent;
+}
 
-  &:hover {
-    color: #28a745;
-    border: 2px solid #28a745;
-    border-radius: 8px;
+form {
+  .iconService {
+    &:hover {
+      color: #28a745;
+      border: 2px solid #28a745;
+      border-radius: 8px;
+    }
   }
 }
 
