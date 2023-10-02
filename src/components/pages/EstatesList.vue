@@ -130,17 +130,21 @@ export default {
 
             <form @submit.prevent="sendForm">
                 <div class="row">
-                    <!-- address -->
-                    <div class="col-12 my-3">
-                        <div class="addresses">
+                    <!-- search address -->
+                    <div class="row ">
+                        <div class="addresses my-3 col-10">
                             <div class="d-flex align-items-center position-relative">
                                 <input id="searchAddress" type="text" class="form-control"
-                                    placeholder="Inizia a scrivere un indirizzo" v-model="form.place.address"
+                                    placeholder="Scegli un indirizzo da cercare" v-model="form.place.address"
                                     @keyup="fetchAddress($event.target.value)">
                                 <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
                                         class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
+
                             </div>
+
                         </div>
+                        <button id="filtersBtn" type="submit" class="my-3 col-2 btn btn-primary " disabled>Trova
+                            Alloggi</button>
                         <div class="suggestedAddresses">
                             <ul class="list-group">
                                 <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
@@ -150,11 +154,11 @@ export default {
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
+                    <!--   <div class="mb-3 d-flex justify-content-center align-items-center gap-3 col-1"> -->
 
-                    <button id="filtersBtn" type="submit" class="btn btn-primary" disabled>Trova Alloggi</button>
+
                 </div>
+
             </form>
 
 
