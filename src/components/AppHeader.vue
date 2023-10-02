@@ -48,8 +48,7 @@
 }
 
 header {
-    background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, rgba(2, 0, 36, 0.9920343137254902) 0%, rgba(9, 79, 121, 1) 32%, rgba(105, 223, 247, 1) 89%);
+
     height: 80px;
     font-weight: bold;
 }
@@ -72,7 +71,7 @@ ul {
 }
 
 .nav1 {
-    color: #ffffff;
+    color: #213644;
     font-size: 1.4rem;
     ;
 }
