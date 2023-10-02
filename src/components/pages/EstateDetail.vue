@@ -2,33 +2,38 @@
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
 import AppLoader from '@/components/AppLoader.vue';
-
+import DetailedAppCard from '@/components/DetailedAppCard.vue';
 
 // Api Endpoints
-const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
+const baseUri = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
   name: 'estateDetail',
-  components: { AppCard, AppLoader },
+  components: { AppCard, AppLoader, DetailedAppCard },
   data() {
     return {
       estate: [],
-      apiLoading: false
+      apiLoading: false,
+      estateOk: false
     }
   },
   methods: {
-    getEstate(baseEndpoint = 'http://127.0.0.1:8000/api/estates/') {
+    fetchEstate() {
+      this.estateOk = false;
       this.apiLoading = true;
-      axios.get(baseEndpoint + `${this.$route.params.id}`)
+      const endpoint = `${baseUri}${this.$route.params.id}`;
+      axios.get(endpoint)
         .then(res => {
           this.estate = res.data;
+          this.estateOk = true;
+
         })
         .catch(err => { console.log(err) })
         .then(() => { this.apiLoading = false })
     }
   },
   created() {
-    this.getEstate();
+    this.fetchEstate();
   }
 };
 </script>
@@ -36,7 +41,7 @@ export default {
 <template>
   <div class="container">
     <AppLoader v-if="apiLoading" />
-    <AppCard v-else :data="estate" :isDetail="true" />
+    <DetailedAppCard v-if="estateOk" :estate="estate" />
   </div>
 </template>
 
