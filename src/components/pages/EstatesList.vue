@@ -125,34 +125,34 @@ export default {
             <!--  <SearchForm @sendForm="sendForm" /> -->
 
             <form @submit.prevent="sendForm">
-                <div class="row">
-                    <!-- search address -->
-                    <div class="row ">
-                        <div class="addresses my-3 col-10">
-                            <div class="d-flex align-items-center position-relative">
-                                <input id="searchAddress" type="text" class="form-control"
-                                    placeholder="Scegli un indirizzo da cercare" v-model="form.place.address"
-                                    @keyup="fetchAddress($event.target.value)">
-                                <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
-                                        class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
-                                </div>
+
+                <!-- search address -->
+                <div class="row ">
+                    <div class="addresses my-3 col-10">
+                        <div class="d-flex align-items-center position-relative">
+                            <input id="searchAddress" type="text" class="form-control"
+                                placeholder="Scegli un indirizzo da cercare" v-model="form.place.address"
+                                @keyup="fetchAddress($event.target.value)">
+                            <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
+                                    class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
                             </div>
                         </div>
-                        <button id="filtersBtn" type="submit" class="my-3 col-2 btn btn-primary " disabled>Trova
-                            Alloggi</button>
-                        <div class="suggestedAddresses">
-                            <ul class="list-group">
-                                <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
-                                    class="liAddress list-group-item">
-                                    <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
-                    <!--   <div class="mb-3 d-flex justify-content-center align-items-center gap-3 col-1"> -->
-
-
+                    <button id="filtersBtn" type="submit" class="my-3 col-2 btn btn-primary " disabled>Trova
+                        Alloggi</button>
+                    <div class="suggestedAddresses">
+                        <ul class="list-group">
+                            <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
+                                class="liAddress list-group-item">
+                                <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                <!--   <div class="mb-3 d-flex justify-content-center align-items-center gap-3 col-1"> -->
+
+
+
 
             </form>
 

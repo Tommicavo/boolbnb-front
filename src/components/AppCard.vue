@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-    <div class="card m-3 text-bg-dark">
+    <div class="card col-2 m-3 text-bg-dark">
 
         <img :src="getImagePath" class="card-img-top" alt="...">
         <div class="card-body d-flex flex-column justify-content-between">
@@ -27,8 +27,8 @@ export default {
             </div>
 
             <!-- Show Button -->
-            <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }"
-                class="btn btn-outline-primary mx-3">Dettaglio
+            <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary mx-3">
+                Dettaglio
             </RouterLink>
 
         </div>
