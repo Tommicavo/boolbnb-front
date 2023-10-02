@@ -5,19 +5,16 @@
         <nav class="container">
 
 
+
             <ul class="me-auto mb-2 mb-lg-0 nav1 d-flex align-items-center ">
                 <img src="../assets/assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
-                <li>
-                    <div class="research ">Home</div>
-                </li>
+              
                 <li>
                     <RouterLink class="nav-link active a1" :to="{ name: 'estates' }">Annunci</RouterLink>
                 </li>
                 <li>
-                    <div class="research">Ricerca avanzata</div>
+                    <RouterLink class="nav-link active" :to="{ name: 'search-page' }">Ricerca Avanzata</RouterLink>
                 </li>
-
-
 
             </ul>
             <nav role='navigation'>
