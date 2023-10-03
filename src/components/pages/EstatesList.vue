@@ -163,6 +163,7 @@ export default {
                 row-cols-md-2 justify-content-md-center 
                 row-cols-lg-4 justify-content-lg-start
                 row-cols-xl-6">
+                <div></div>
 
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
