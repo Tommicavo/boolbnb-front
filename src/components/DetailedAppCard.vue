@@ -13,6 +13,7 @@ export default {
     props: {
         estate: Object
     },
+
     emits: ['newEstate'],
     computed: {
         hasImages() {
@@ -23,7 +24,9 @@ export default {
         getImagePath(image) {
             const url = image.url;
             return `http://127.0.0.1:8000/storage/${url}`;
-        },
+        }
+    },
+  
         formatDates($in_date) {
             const date = new Date($in_date);
 
@@ -49,6 +52,7 @@ export default {
 
 <template>
     <div v-if="estate" class="card mt-3">
+
         <div class="card-header text-center position-relative">
             <div class="headerLeft">
                 <RouterLink class="btn btn-info" :to="{ name: 'estates' }">
@@ -76,6 +80,7 @@ export default {
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imagesCarousel" data-bs-slide="prev">
+
                 <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-backward" /></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#imagesCarousel" data-bs-slide="next">
@@ -100,32 +105,47 @@ export default {
                 <p>{{ estate.description }}</p>
             </div>
 
-            <!-- services -->
-            <div v-if="estate.services" class="estateServices d-flex align-items-center">
-                <span><strong>Servizi: </strong></span>
-                <span v-for="service in estate.services" :key="service.id">
-                    <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
-                </span>
-            </div>
+        <div class="card-body d-flex">
 
-            <div class="estateInfo row">
-                <div>
-                    <span><strong>Stanze</strong></span>
-                    <span>: {{ estate.rooms }}</span>
+            <div class="left">
+                <!-- address -->
+                <div class="addressCard">
+                    <BasicMap :estate="estate" />
                 </div>
-                <div>
-                    <span><strong>Camere</strong></span>
-                    <span>: {{ estate.beds }}</span>
+            </div>
+            <div class="righ">
+                <!-- description -->
+                <div class="estateDescription">
+                    <div><strong>Description</strong></div>
+                    <p>{{ estate.description }}</p>
                 </div>
-                <div>
-                    <span><strong>Bagni</strong></span>
-                    <span>: {{ estate.bathrooms }}</span>
+
+                <!-- services -->
+                <div v-if="estate.services" class="estateServices d-flex align-items-center">
+                    <span><strong>Servizi: </strong></span>
+                    <span v-for="service in estate.services" :key="service.id">
+                        <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
+                    </span>
                 </div>
-                <div>
-                    <span><strong>Superficie</strong></span>
-                    <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
-                </div>
-                <div>
+
+                <div class="estateInfo row">
+                    <div class="">
+                        <span><strong>Stanze</strong></span>
+                        <span>: {{ estate.rooms }}</span>
+                    </div>
+                    <div class="">
+                        <span><strong>Camere</strong></span>
+                        <span>: {{ estate.beds }}</span>
+                    </div>
+                    <div class="">
+                        <span><strong>Bagni</strong></span>
+                        <span>: {{ estate.bathrooms }}</span>
+                    </div>
+                    <div class="">
+                        <span><strong>Superficie</strong></span>
+                        <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
+                    </div>
+            <div>
                     <span><strong>Prezzo</strong></span>
                     <span>: {{ estate.price }} €</span>
                 </div>
@@ -137,6 +157,8 @@ export default {
                     <span><strong>Ultima modifica</strong></span>
                     <span>: {{ formatDates(estate.updated_at) }} </span>
                 </div>
+                </div>
+                
             </div>
         </div>
     </div>
@@ -176,6 +198,7 @@ export default {
 .card-body>* {
     padding-bottom: 0.5rem;
 }
+
 
 .headerLeft {
     position: absolute;

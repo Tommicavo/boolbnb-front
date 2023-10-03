@@ -3,13 +3,14 @@ import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
 import AppLoader from '@/components/AppLoader.vue';
 import DetailedAppCard from '@/components/DetailedAppCard.vue';
+import ContactForm from '../ContactForm.vue';
 
 // Api Endpoints
 const baseUri = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
   name: 'estateDetail',
-  components: { AppCard, AppLoader, DetailedAppCard },
+  components: { ContactForm, AppCard, AppLoader, DetailedAppCard },
   data() {
     return {
       estate: [],
@@ -46,6 +47,7 @@ export default {
 <template>
   <div class="container">
     <AppLoader v-if="apiLoading" />
+    <ContactForm :estate_id="estate.id" />
     <DetailedAppCard v-if="estateOk" :estate="estate" @newEstate="fetchNewEstate"/>
   </div>
 </template>
