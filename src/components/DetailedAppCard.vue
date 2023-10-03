@@ -43,10 +43,6 @@ export default {
         const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
         return out_date;
     }
-  },
-  created(){
-    console.log();
-  }
 }
 </script>
 
@@ -73,7 +69,8 @@ export default {
         <!-- images carousel -->
         <div v-if="hasImages" id="imagesCarousel" class="carousel slide my-2">
             <div class="carousel-inner">
-                <div v-for="image in estate.images" :key="image.id" class="carousel-item" :class="estate.images[0].id == image.id ? 'active' : ''">
+                <div v-for="image in estate.images" :key="image.id" class="carousel-item"
+                    :class="estate.images[0].id == image.id ? 'active' : ''">
                     <img :src="getImagePath(image)" class="estateImg d-block" alt="">
                 </div>
             </div>
@@ -84,7 +81,7 @@ export default {
                 <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-forward" /></span>
             </button>
         </div>
-        
+
         <div class="card-body">
             <!-- title -->
             <div class="estateTitle">
@@ -93,12 +90,12 @@ export default {
 
             <!-- address -->
             <div class="addressCard">
-                <BasicMap :estate="estate"/>
+                <BasicMap :estate="estate" />
             </div>
 
             <!-- description -->
             <div class="estateDescription">
-                <div><strong>Description</strong></div>
+                <div><strong>Descrizione</strong></div>
                 <p>{{ estate.description }}</p>
             </div>
 
@@ -146,7 +143,8 @@ export default {
 
 <style lang="scss" scoped>
 @use '@/assets/scss/partials/vars' as *;
-#imagesCarousel .btn.btn-primary{
+
+#imagesCarousel .btn.btn-primary {
     font-size: 1.5rem;
     font-weight: bold;
     color: $logo-color;
@@ -156,12 +154,11 @@ export default {
 }
 
 #imagesCarousel .carousel-control-next:hover .btn.btn-primary,
-#imagesCarousel .carousel-control-prev:hover .btn.btn-primary
-{
+#imagesCarousel .carousel-control-prev:hover .btn.btn-primary {
     opacity: 1;
 }
 
-.estateImg{
+.estateImg {
     min-width: 420px;
     max-width: 100%;
     height: 500px;
@@ -169,13 +166,13 @@ export default {
 }
 
 .iconService {
-  padding: 10px;
-  font-size: 1.6rem;
-  font-weight: 500;
-  border: 2px solid transparent;
+    padding: 10px;
+    font-size: 1.6rem;
+    font-weight: 500;
+    border: 2px solid transparent;
 }
 
-.card-body>*{
+.card-body>* {
     padding-bottom: 0.5rem;
 }
 
@@ -183,5 +180,4 @@ export default {
     position: absolute;
     left: 1rem;
 }
-
 </style>
