@@ -114,7 +114,7 @@ export default {
       document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
       this.sendForm();
     },
-    radiusChanged(){
+    radiusChanged() {
       clearTimeout(this.radiusTimeoutId);
       this.radiusTimeoutId = setTimeout(() => {
         console.log('clicked');
@@ -189,7 +189,8 @@ export default {
               <div class="col-sm-6 col-lg-2 mb-3">
                 <label for="radius" class="form-label">Nel raggio di</label>
                 <div class="input-group">
-                  <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius" @keyup="radiusChanged">
+                  <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius"
+                    @keyup="radiusChanged">
                   <span class="input-group-text">Km</span>
                 </div>
               </div>
@@ -205,9 +206,9 @@ export default {
               </div>
 
               <!-- Button -->
-              <div class="col-1 mb-3">
-                <div class="form-label">Filtri</div>
-                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm" :disabled="isFilterReset">
+              <div class="d-flex align-items-center justify-content-center my-3">
+                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
+                  :disabled="isFilterReset">
                   <span><font-awesome-icon icon="fa-solid fa-rotate" /></span>
                 </button>
               </div>
@@ -259,7 +260,7 @@ export default {
               <td> {{ printDistance(estate.distance) }} Km</td>
               <td>
                 <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }" class="btn btn-outline-primary">
-                    Info
+                  Info
                 </RouterLink>
               </td>
             </tr>
@@ -279,13 +280,14 @@ export default {
   border: 2px solid transparent;
 }
 
-.itemService:hover{
+.itemService:hover {
   color: black;
 }
 
 form {
   .iconService {
     cursor: pointer;
+
     &:hover {
       color: #28a745;
       border: 2px solid #28a745;
