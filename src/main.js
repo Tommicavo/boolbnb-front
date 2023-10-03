@@ -19,6 +19,7 @@ import { faBackward } from '@fortawesome/free-solid-svg-icons'
 import { faForward } from '@fortawesome/free-solid-svg-icons'
 import { faRotate } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +27,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 // Generics Components
 
-library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse);
+library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation);
 
 // App
 const app = createApp(App);

@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios';
 const baseUri = 'http://127.0.0.1:8000/api/messages';
+const emailJsValidationExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export default {
     name: 'ContactForm',
@@ -13,14 +14,20 @@ export default {
                 email: '',
                 name: '',
                 text: '',
-            }
+                estate_id: null
+            },
+            errors: {email: [], text: []}
         };
     },
     methods: {
         sendForm() {
+            this.errors = {email: [], text: []};
+            const errors = !this.validateForm();
+            if (errors) return;
             this.form.estate_id = this.computedEstateId;
             axios.post(baseUri, this.form)
                 .then(response => {
+                    console.log('DATA: ', response.data);
                     this.form.email = '';
                     this.form.name = '';
                     this.form.text = '';
@@ -29,13 +36,26 @@ export default {
                     console.error(error);
                 });
         },
+        validateForm(){
+            // email validation
+            if (!this.form.email){
+                this.errors.email.push('L\'email è obbligatoria');
+            } else if (!this.form.email.match(emailJsValidationExp)){
+                this.errors.email.push('L\'email inserita non è valida');
+            }
+            // text validation
+            if (!this.form.text){
+                this.errors.text.push('Scrivi un messaggio per il proprietario dell\'alloggio');
+            }
+            const hasErrors = Object.keys(this.errors).some(key => this.errors[key].length > 0);
+            return !hasErrors;
+        }
     },
     computed: {
         computedEstateId() {
             return this.estate_id;
         }
-    },
-
+    }
 }
 </script>
 
@@ -44,34 +64,47 @@ export default {
     <h2 class="mt-5">Contatta il proprietario</h2>
     <div class="card mt-4">
         <div class="card-body">
-            <form @submit.prevent="sendForm">
+            <form @submit.prevent="sendForm" novalidate>
                 <div class="row d-flex justify-content-end">
                     <div class="col-6">
-                        <div class="mb-3">
+                        <div>
                             <label for="email" class="form-label"><strong>Email <sup
                                         class="text-danger">*</sup></strong></label>
-                            <input v-model.trim="form.email" type="email" class="form-control" id="email" name="email"
+                            <input v-model.trim="form.email" type="email" class="form-control" :class="{'is-invalid' : errors.email.length}" id="email" name="email"
                                 aria-describedby="emailHelp">
+                        </div>
+                        <div>
+                            <ul class="errorList">
+                                <li v-for="error in errors.email" class="errorMessage text-danger">
+                                    <span><font-awesome-icon icon="fa-solid fa-triangle-exclamation" /></span>
+                                    <span class="mx-2">{{ error }}</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="col-6">
-                        <div class="mb-3">
-                            <label for="name" class="form-label"><strong>Nome<sup
-                                        class="text-danger">*</sup></strong></label>
+                        <div>
+                            <label for="name" class="form-label"><strong>Nome</strong></label>
                             <input v-model.trim="form.name" type="text" class="form-control" id="name" name="name">
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="mb-3">
+                        <div>
                             <label for="text" class="form-label"><strong>Messaggio<sup
                                         class="text-danger">*</sup></strong></label>
-                            <textarea v-model.trim="form.text" class="form-control" name="text" id="text"
+                            <textarea v-model.trim="form.text" class="form-control" :class="{'is-invalid' : errors.text.length}" name="text" id="text"
                                 rows="5"></textarea>
                         </div>
-
+                        <div>
+                            <ul class="errorList">
+                                <li v-for="error in errors.text" class="errorMessage text-danger">
+                                    <span><font-awesome-icon icon="fa-solid fa-triangle-exclamation" /></span>
+                                    <span class="mx-2">{{ error }}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <button class="btn btn-success">invia</button>
-
+                    <button type="submit" class="btn btn-success">Invia</button>
                 </div>
             </form>
         </div>
@@ -84,5 +117,9 @@ export default {
 .btn {
     width: 100px;
     margin-right: 1rem;
+}
+
+.errorList{
+    padding: 0 0.5rem;
 }
 </style>
