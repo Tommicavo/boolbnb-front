@@ -61,7 +61,7 @@ header {
 
 .logo {
     max-height: 330px;
-    margin: 15px -85px 0 -85px
+    margin: 15px -70px 0 -70px
 }
 
 ul {

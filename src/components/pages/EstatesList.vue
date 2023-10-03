@@ -111,7 +111,7 @@ export default {
         <!-- search address -->
         <form @submit.prevent="sendForm">
             <div class="row">
-                <div class="addresses ps-0 my-3 col-12">
+                <div class="addresses px-0 my-3 col-12">
                     <div class="d-flex align-items-center position-relative">
                         <input id="searchAddress" type="text" class="form-control"
                             placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
