@@ -34,6 +34,7 @@ export default {
     },
     methods: {
         sendForm() {
+            this.apiLoading = true
             this.estates = [];
             const endpoint = 'http://127.0.0.1:8000/api/estates/filter';
             axios.post(endpoint, this.form)
@@ -42,6 +43,7 @@ export default {
                     console.log('RESULTS: ', this.estates);
                 })
                 .catch(err => { console.error(err) })
+                .then(() => { this.apiLoading = false })
         },
         fetchAddress(address) {
             const baseUri = 'https://api.tomtom.com/search/2/search/';
