@@ -76,10 +76,11 @@ export default {
     },
     sendForm() {
       this.filteredEstates = [];
-      const endpoint = 'http://127.0.0.1:8000/api/services/filter';
+      const endpoint = 'http://127.0.0.1:8000/api/estates/filter';
       axios.post(endpoint, this.form)
         .then(res => {
-          this.filteredEstates = res.data.withinRadiusEstates;
+          this.filteredEstates = res.data;
+          console.log('RESULTS: ', this.filteredEstates);
         })
         .catch(err => { console.error(err) })
     },
