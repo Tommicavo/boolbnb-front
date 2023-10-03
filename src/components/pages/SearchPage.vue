@@ -205,13 +205,6 @@ export default {
                 <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds">
               </div>
 
-              <!-- Button -->
-              <div class="d-flex align-items-center justify-content-center my-3">
-                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
-                  :disabled="isFilterReset">
-                  <span><font-awesome-icon icon="fa-solid fa-rotate" /></span>
-                </button>
-              </div>
 
               <!-- services -->
               <div class="col-sm-8 col-md-12 text-center mb-3">
@@ -223,6 +216,16 @@ export default {
                       :icon="'fa-solid fa-' + service.icon" /></label>
                 </div>
               </div>
+
+              <!-- Button -->
+              <div class="d-flex align-items-center justify-content-center my-3">
+                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
+                  :disabled="isFilterReset">
+                  <span><font-awesome-icon icon="fa-solid fa-rotate" /></span>
+                </button>
+              </div>
+
+
             </div>
           </form>
         </div>
