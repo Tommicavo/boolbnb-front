@@ -16,26 +16,25 @@ export default {
 </script>
 
 <template>
-    <div class="card col-2 m-3 text-bg-dark">
-
-        <img :src="getImagePath" class="card-img-top" alt="...">
+    <div class="card text-bg-dark p-0 g-4">
+        <figure>
+            <img :src="getImagePath" class="card-img-top" alt="...">
+        </figure>
         <div class="card-body d-flex flex-column justify-content-between">
             <div>
                 <div class="heart" style:> &#10084;</div>
                 <h5 class="card-title">{{ data.title }}</h5>
                 <p class="card-text">{{ data.description }}</p>
             </div>
-
             <!-- Show Button -->
             <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary mx-3">
                 Dettaglio
             </RouterLink>
-
         </div>
     </div>
 </template>
 
-<style>
+<style scoped lang="scss">
 .heart {
     width: 10px;
     height: 15px;
@@ -50,5 +49,14 @@ export default {
     color: #FFBD59;
     opacity: 1;
     cursor: pointer;
+}
+
+figure {
+    height: 50%;
+}
+
+img {
+    object-fit: cover;
+    height: 100%;
 }
 </style>

@@ -127,8 +127,8 @@ export default {
             <form @submit.prevent="sendForm">
 
                 <!-- search address -->
-                <div class="row ">
-                    <div class="addresses my-3 col-10">
+                <div class="row">
+                    <div class="addresses ps-0 my-3 col-sm-9 col-lg-10">
                         <div class="d-flex align-items-center position-relative">
                             <input id="searchAddress" type="text" class="form-control"
                                 placeholder="Scegli un indirizzo da cercare" v-model="form.place.address"
@@ -138,7 +138,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <button id="filtersBtn" type="submit" class="my-3 col-2 btn btn-primary " disabled>Trova
+                    <button id="filtersBtn" type="submit" class="my-3 col-sm-3 col-lg-2 btn btn-primary " disabled>Trova
                         Alloggi</button>
                     <div class="suggestedAddresses">
                         <ul class="list-group">
@@ -158,7 +158,11 @@ export default {
 
 
             <!-- Hide if empty -->
-            <div v-if="estates.length" class="row">
+            <div v-if="estates.length" class="row 
+            row-cols-sm-1 justify-content-sm-center 
+                row-cols-md-2 justify-content-md-center 
+                row-cols-lg-4 justify-content-lg-start
+                row-cols-xl-6">
 
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
@@ -184,4 +188,4 @@ export default {
     </main>
 </template>
 
-<style></style>
+<style scoped lang="scss"></style>
