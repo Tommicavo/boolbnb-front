@@ -43,7 +43,7 @@ export default {
   <div class="container">
     <AppLoader v-if="apiLoading" />
     <DetailedAppCard v-if="estateOk" :estate="estate" />
-    <ContactForm />
+    <ContactForm :estate_id="estate.id" />
   </div>
 </template>
 
