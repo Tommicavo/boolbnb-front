@@ -75,16 +75,6 @@ export default {
             document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
             this.sendForm();
         },
-        fetchestates(baseEndpoint = 'http://127.0.0.1:8000/api/estates/') {
-            this.apiLoading = true;
-            axios.get(baseEndpoint)
-                .then(res => {
-                    this.estates = res.data.results;
-                    console.log(this.estates)
-                })
-                .catch(err => { console.log(err) })
-                .then(() => { this.apiLoading = false })
-        },
         resetAddress() {
             this.form.place.address = '';
             this.form.place.lon = null;
@@ -113,7 +103,7 @@ export default {
         <!-- search address -->
         <form @submit.prevent="sendForm">
             <div class="row">
-                <div class="addresses px-0 my-3 col-12">
+                <div class="addresses px-0 my-3 col-8 mx-auto">
                     <div class="d-flex align-items-center position-relative">
                         <input id="searchAddress" type="text" class="form-control"
                             placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
@@ -123,7 +113,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="col-10 suggestedAddresses">
+                <div class="suggestedAddresses col-8 mx-auto">
                     <ul class="list-group">
                         <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
                             class="liAddress list-group-item">
