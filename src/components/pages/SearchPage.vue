@@ -155,9 +155,9 @@ export default {
         <div class="card-body">
           <!-- SearchForm -->
           <form @submit.prevent="sendForm">
-            <div class="row">
+            <div class="row justify-content-center">
               <!-- address -->
-              <div class="col-6 mb-3">
+              <div class="col-sm-12 col-lg-8 mb-3">
                 <div class="addresses">
                   <label for="searchAddress" class="form-label">Cerca un indirizzo o una città</label>
                   <div class="d-flex align-items-center position-relative">
@@ -177,9 +177,8 @@ export default {
                   </ul>
                 </div>
               </div>
-
               <!-- radius -->
-              <div class="col-2 mb-3">
+              <div class="col-sm-6 col-lg-2 mb-3">
                 <label for="radius" class="form-label">Nel raggio di</label>
                 <div class="input-group">
                   <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius">
@@ -187,17 +186,17 @@ export default {
                 </div>
               </div>
               <!-- min rooms -->
-              <div class="col-2 mb-3">
+              <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minRooms" class="form-label">Stanze</label>
                 <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms">
               </div>
               <!-- min beds -->
-              <div class="col-2 mb-3">
+              <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minBeds" class="form-label">Letti</label>
                 <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds">
               </div>
               <!-- services -->
-              <div class="col-12 text-center mb-3">
+              <div class="col-sm-8 col-md-12 text-center mb-3">
                 <h4 class="py-3">Seleziona i servizi che desideri</h4>
                 <div v-for="service in services" :key="service.id" class="form-check form-check-inline">
                   <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]">
