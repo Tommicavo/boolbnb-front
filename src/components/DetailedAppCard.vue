@@ -13,7 +13,6 @@ export default {
     props: {
         estate: Object
     },
-
     emits: ['newEstate'],
     computed: {
         hasImages() {
@@ -44,9 +43,7 @@ export default {
             const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
             return out_date;
         }
-    },
-
-
+    }
 }
 
 </script>
@@ -81,7 +78,6 @@ export default {
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imagesCarousel" data-bs-slide="prev">
-
                 <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-backward" /></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#imagesCarousel" data-bs-slide="next">
@@ -95,54 +91,32 @@ export default {
                 <h2 class="text-center py-2">{{ estate.title }}</h2>
             </div>
 
-            <!-- address -->
-            <div class="addressCard">
-                <BasicMap :estate="estate" />
-            </div>
-
             <!-- description -->
             <div class="estateDescription">
                 <div><strong>Descrizione</strong></div>
                 <p>{{ estate.description }}</p>
             </div>
 
-            <div class="card-body d-flex">
-
+            <div class="card-body d-flex p-0 gap-3">
                 <div class="left">
-                    <!-- address -->
-                    <div class="addressCard">
-                        <BasicMap :estate="estate" />
-                    </div>
+                    <!-- map -->
+                    <BasicMap :estate="estate" />
                 </div>
-                <div class="righ">
-                    <!-- description -->
-                    <div class="estateDescription">
-                        <div><strong>Description</strong></div>
-                        <p>{{ estate.description }}</p>
-                    </div>
-
-                    <!-- services -->
-                    <div v-if="estate.services" class="estateServices d-flex align-items-center">
-                        <span><strong>Servizi: </strong></span>
-                        <span v-for="service in estate.services" :key="service.id">
-                            <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
-                        </span>
-                    </div>
-
+                <div class="right">
                     <div class="estateInfo row">
-                        <div class="">
+                        <div>
                             <span><strong>Stanze</strong></span>
                             <span>: {{ estate.rooms }}</span>
                         </div>
-                        <div class="">
+                        <div>
                             <span><strong>Camere</strong></span>
                             <span>: {{ estate.beds }}</span>
                         </div>
-                        <div class="">
+                        <div>
                             <span><strong>Bagni</strong></span>
                             <span>: {{ estate.bathrooms }}</span>
                         </div>
-                        <div class="">
+                        <div>
                             <span><strong>Superficie</strong></span>
                             <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
                         </div>
@@ -159,8 +133,14 @@ export default {
                             <span>: {{ formatDates(estate.updated_at) }} </span>
                         </div>
                     </div>
-
                 </div>
+            </div>
+            <!-- services -->
+            <div v-if="estate.services" class="estateServices d-flex align-items-center">
+                <span><strong>Servizi: </strong></span>
+                <span v-for="service in estate.services" :key="service.id">
+                    <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
+                </span>
             </div>
         </div>
     </div>
@@ -201,9 +181,16 @@ export default {
     padding-bottom: 0.5rem;
 }
 
-
 .headerLeft {
     position: absolute;
     left: 1rem;
+}
+
+.card-body .left{
+    flex-basis: 70%;
+}
+
+.card-body .right{
+    flex-basis: 30%;
 }
 </style>
