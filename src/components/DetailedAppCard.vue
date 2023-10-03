@@ -24,9 +24,7 @@ export default {
         getImagePath(image) {
             const url = image.url;
             return `http://127.0.0.1:8000/storage/${url}`;
-        }
-    },
-  
+        },
         formatDates($in_date) {
             const date = new Date($in_date);
 
@@ -46,8 +44,11 @@ export default {
             const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
             return out_date;
         }
-    }
+    },
+
+
 }
+
 </script>
 
 <template>
@@ -105,60 +106,61 @@ export default {
                 <p>{{ estate.description }}</p>
             </div>
 
-        <div class="card-body d-flex">
+            <div class="card-body d-flex">
 
-            <div class="left">
-                <!-- address -->
-                <div class="addressCard">
-                    <BasicMap :estate="estate" />
+                <div class="left">
+                    <!-- address -->
+                    <div class="addressCard">
+                        <BasicMap :estate="estate" />
+                    </div>
                 </div>
-            </div>
-            <div class="righ">
-                <!-- description -->
-                <div class="estateDescription">
-                    <div><strong>Description</strong></div>
-                    <p>{{ estate.description }}</p>
-                </div>
+                <div class="righ">
+                    <!-- description -->
+                    <div class="estateDescription">
+                        <div><strong>Description</strong></div>
+                        <p>{{ estate.description }}</p>
+                    </div>
 
-                <!-- services -->
-                <div v-if="estate.services" class="estateServices d-flex align-items-center">
-                    <span><strong>Servizi: </strong></span>
-                    <span v-for="service in estate.services" :key="service.id">
-                        <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
-                    </span>
-                </div>
+                    <!-- services -->
+                    <div v-if="estate.services" class="estateServices d-flex align-items-center">
+                        <span><strong>Servizi: </strong></span>
+                        <span v-for="service in estate.services" :key="service.id">
+                            <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
+                        </span>
+                    </div>
 
-                <div class="estateInfo row">
-                    <div class="">
-                        <span><strong>Stanze</strong></span>
-                        <span>: {{ estate.rooms }}</span>
+                    <div class="estateInfo row">
+                        <div class="">
+                            <span><strong>Stanze</strong></span>
+                            <span>: {{ estate.rooms }}</span>
+                        </div>
+                        <div class="">
+                            <span><strong>Camere</strong></span>
+                            <span>: {{ estate.beds }}</span>
+                        </div>
+                        <div class="">
+                            <span><strong>Bagni</strong></span>
+                            <span>: {{ estate.bathrooms }}</span>
+                        </div>
+                        <div class="">
+                            <span><strong>Superficie</strong></span>
+                            <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
+                        </div>
+                        <div>
+                            <span><strong>Prezzo</strong></span>
+                            <span>: {{ estate.price }} €</span>
+                        </div>
+                        <div>
+                            <span><strong>Creato il</strong></span>
+                            <span>: {{ formatDates(estate.created_at) }} </span>
+                        </div>
+                        <div>
+                            <span><strong>Ultima modifica</strong></span>
+                            <span>: {{ formatDates(estate.updated_at) }} </span>
+                        </div>
                     </div>
-                    <div class="">
-                        <span><strong>Camere</strong></span>
-                        <span>: {{ estate.beds }}</span>
-                    </div>
-                    <div class="">
-                        <span><strong>Bagni</strong></span>
-                        <span>: {{ estate.bathrooms }}</span>
-                    </div>
-                    <div class="">
-                        <span><strong>Superficie</strong></span>
-                        <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
-                    </div>
-            <div>
-                    <span><strong>Prezzo</strong></span>
-                    <span>: {{ estate.price }} €</span>
+
                 </div>
-                <div>
-                    <span><strong>Creato il</strong></span>
-                    <span>: {{ formatDates(estate.created_at) }} </span>
-                </div>
-                <div>
-                    <span><strong>Ultima modifica</strong></span>
-                    <span>: {{ formatDates(estate.updated_at) }} </span>
-                </div>
-                </div>
-                
             </div>
         </div>
     </div>

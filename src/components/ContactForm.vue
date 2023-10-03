@@ -1,39 +1,40 @@
 <script>
 import axios from 'axios';
 const baseUri = 'http://127.0.0.1:8000/api/messages';
+
 export default {
     name: 'ContactForm',
-
+    props: {
+        estate_id: Number
+    },
     data() {
         return {
             form: {
                 email: '',
                 name: '',
                 text: '',
-                estate_id: this.estate_id
             }
         };
     },
-    props: {
-        estate_id: Number
-    },
     methods: {
         sendForm() {
+            this.form.estate_id = this.computedEstateId;
             axios.post(baseUri, this.form)
                 .then(response => {
-                    this.form = {
-                        email: '',
-                        name: '',
-                        text: '',
-                        estate_id: this.estate_id
-
-                    };
+                    this.form.email = '';
+                    this.form.name = '';
+                    this.form.text = '';
                 })
                 .catch(error => {
                     console.error(error);
                 });
         },
-    }
+    },
+    computed: {
+        computedEstateId() {
+            return this.estate_id;
+        }
+    },
 
 }
 </script>
