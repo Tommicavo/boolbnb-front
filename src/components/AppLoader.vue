@@ -2,7 +2,6 @@
 
 <template>
     <div class="d-flex justify-content-center align-items-center">
-        <h1>caricamento... </h1>
         <span class="loader"></span>
     </div>
 </template>
@@ -14,7 +13,6 @@ div {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0.5, 0.5, 0.5, 0.8);
 }
 
 h1 {

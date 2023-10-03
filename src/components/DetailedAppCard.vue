@@ -3,38 +3,71 @@
 import BasicMap from '@/components/BasicMap.vue';
 
 export default {
-    name: 'DetailedAppCard',
-    data() {
-        return {}
+  name: 'DetailedAppCard',
+  data() {
+    return {}
+  },
+  components: {
+    BasicMap
+  },
+  props: {
+    estate: Object
+  },
+  emits: ['newEstate'],
+  computed: {
+    hasImages(){
+        return Boolean(this.estate.images.length);
+    }
+  },
+  methods: {
+    getImagePath(image){
+        const url = image.url;
+        return `http://127.0.0.1:8000/storage/${url}`;
     },
-    components: {
-        BasicMap
-    },
-    props: {
-        estate: Object
-    },
-    computed: {
+    formatDates($in_date) {
+        const date = new Date($in_date);
 
-    },
-    methods: {
-        getImagePath(image) {
-            const url = image.url;
-            return `http://127.0.0.1:8000/storage/${url}`;
-        }
-    },
-    created() {
-        console.log();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        const year = date.getFullYear();
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+
+        day = day < 10 ? '0' + day : day;
+        month = month < 10 ? '0' + month : month;
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
+        return out_date;
     }
 }
 </script>
 
 <template>
     <div v-if="estate" class="card mt-3">
-        <div class="card-header text-center">
-            HomePage - Prev - Next
+        <div class="card-header text-center position-relative">
+            <div class="headerLeft">
+                <RouterLink class="btn btn-info" :to="{ name: 'estates' }">
+                    <span><font-awesome-icon icon="fa-solid fa-house" /></span>
+                    <span class="mx-2">Home Page</span>
+                </RouterLink>
+            </div>
+            <div class="headerCenter d-flex justify-content-center align-items-center gap-3">
+                <button type="button" class="btn btn-primary" @click="$emit('newEstate', estate.prevId)">
+                    <span><font-awesome-icon icon="fa-solid fa-backward" /></span>
+                    <span class="mx-2">Precedente</span>
+                </button>
+                <button type="button" class="btn btn-primary" @click="$emit('newEstate', estate.nextId)">
+                    <span class="mx-2">Successivo</span>
+                    <span><font-awesome-icon icon="fa-solid fa-forward" /></span>                
+                </button>
+            </div>
         </div>
         <!-- images carousel -->
-        <div v-if="estate.images" id="imagesCarousel" class="carousel slide my-2">
+        <div v-if="hasImages" id="imagesCarousel" class="carousel slide my-2">
             <div class="carousel-inner">
                 <div v-for="image in estate.images" :key="image.id" class="carousel-item"
                     :class="estate.images[0].id == image.id ? 'active' : ''">
@@ -42,12 +75,10 @@ export default {
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#imagesCarousel" data-bs-slide="prev">
-                <span :class="{ 'd-none': estate.images }" class="btn btn-primary"><font-awesome-icon
-                        icon="fa-solid fa-backward" /></span>
+                <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-backward" /></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#imagesCarousel" data-bs-slide="next">
-                <span :class="{ 'd-none': estate.images }" class="btn btn-primary"><font-awesome-icon
-                        icon="fa-solid fa-forward" /></span>
+                <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-forward" /></span>
             </button>
         </div>
 
@@ -77,21 +108,33 @@ export default {
             </div>
 
             <div class="estateInfo row">
-                <div class="">
+                <div>
                     <span><strong>Stanze</strong></span>
                     <span>: {{ estate.rooms }}</span>
                 </div>
-                <div class="">
+                <div>
                     <span><strong>Camere</strong></span>
                     <span>: {{ estate.beds }}</span>
                 </div>
-                <div class="">
+                <div>
                     <span><strong>Bagni</strong></span>
                     <span>: {{ estate.bathrooms }}</span>
                 </div>
-                <div class="">
+                <div>
                     <span><strong>Superficie</strong></span>
                     <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
+                </div>
+                <div>
+                    <span><strong>Prezzo</strong></span>
+                    <span>: {{ estate.price }} €</span>
+                </div>
+                <div>
+                    <span><strong>Creato il</strong></span>
+                    <span>: {{ formatDates(estate.created_at) }} </span>
+                </div>
+                <div>
+                    <span><strong>Ultima modifica</strong></span>
+                    <span>: {{ formatDates(estate.updated_at) }} </span>
                 </div>
             </div>
         </div>
@@ -131,5 +174,10 @@ export default {
 
 .card-body>* {
     padding-bottom: 0.5rem;
+}
+
+.headerLeft{
+    position: absolute;
+    left: 1rem;
 }
 </style>

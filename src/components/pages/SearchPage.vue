@@ -14,7 +14,8 @@ export default {
       form: searchForm,
       services: [],
       filteredEstates: [],
-      timeoutId: null,
+      addressTimeoutId: null,
+      radiusTimeoutId: null,
       suggestedAddresses: [],
       isAddressSelected: false
     }
@@ -50,6 +51,8 @@ export default {
 
         // Filtra per il numero minimo di letti
         if (estate.beds < this.form.minBeds) return false;
+
+        // Filtra per i servizi selezionati
         return Object.keys(this.form.services).every(serviceKey => {
           if (!this.form.services[serviceKey]) return true;
           return estate.services.some(service => service.label === serviceKey);
@@ -73,10 +76,11 @@ export default {
     },
     sendForm() {
       this.filteredEstates = [];
-      const endpoint = 'http://127.0.0.1:8000/api/services/filter';
+      const endpoint = 'http://127.0.0.1:8000/api/estates/filter';
       axios.post(endpoint, this.form)
         .then(res => {
-          this.filteredEstates = res.data.withinRadiusEstates;
+          this.filteredEstates = res.data;
+          console.log('RESULTS: ', this.filteredEstates);
         })
         .catch(err => { console.error(err) })
     },
@@ -87,18 +91,15 @@ export default {
 
       if (this.isAddressFieldEmpty || this.isAddressSelected) return;
 
-      clearTimeout(this.timeoutId);
-      this.timeoutId = setTimeout(() => {
+      clearTimeout(this.addressTimeoutId);
+      this.addressTimeoutId = setTimeout(() => {
         const endpoint = `${baseUri}${address}${params}${apiKey}`;
         this.suggestedAddresses = [];
-        // console.log(endpoint);
 
         axios.get(endpoint)
           .then(res => {
             const results = res.data.results;
-            // console.log('results: ', results);
             results.forEach(result => {
-              // console.log('result: ', result.address.freeformAddress);
               this.suggestedAddresses.push(result);
             })
           })
@@ -110,15 +111,22 @@ export default {
       this.form.place.lon = address.position.lon;
       this.form.place.lat = address.position.lat;
       this.isAddressSelected = true;
-      document.getElementById('filtersBtn').removeAttribute('disabled');
       document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
+      this.sendForm();
+    },
+    radiusChanged(){
+      clearTimeout(this.radiusTimeoutId);
+      this.radiusTimeoutId = setTimeout(() => {
+        console.log('clicked');
+        if (this.isAddressSelected) this.sendForm();
+      }, 250);
     },
     resetAddress() {
+      this.filteredEstates = [];
       this.form.place.address = '';
       this.form.place.lon = null;
       this.form.place.lat = null;
       this.isAddressSelected = false;
-      document.getElementById('filtersBtn').setAttribute('disabled', 'disabled');
       document.getElementById('searchAddress').removeAttribute('readonly');
       document.getElementById('searchAddress').focus();
     },
@@ -181,7 +189,7 @@ export default {
               <div class="col-sm-6 col-lg-2 mb-3">
                 <label for="radius" class="form-label">Nel raggio di</label>
                 <div class="input-group">
-                  <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius">
+                  <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius" @keyup="radiusChanged">
                   <span class="input-group-text">Km</span>
                 </div>
               </div>
@@ -195,6 +203,15 @@ export default {
                 <label for="minBeds" class="form-label">Letti</label>
                 <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds">
               </div>
+
+              <!-- Button -->
+              <div class="col-1 mb-3">
+                <div class="form-label">Filtri</div>
+                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm" :disabled="isFilterReset">
+                  <span><font-awesome-icon icon="fa-solid fa-rotate" /></span>
+                </button>
+              </div>
+
               <!-- services -->
               <div class="col-sm-8 col-md-12 text-center mb-3">
                 <h4 class="py-3">Seleziona i servizi che desideri</h4>
@@ -204,12 +221,6 @@ export default {
                       :class="['iconService', { 'iconSelected': form.services[service.label] }]"
                       :icon="'fa-solid fa-' + service.icon" /></label>
                 </div>
-              </div>
-
-              <!-- Buttons -->
-              <div class="mb-3 d-flex justify-content-center align-items-center gap-3">
-                <!-- <button type="button" class="btn btn-warning" @click="initForm" :disabled="isFilterReset" hidden></button> -->
-                <button id="filtersBtn" type="submit" class="btn btn-primary d-none" disabled></button>
               </div>
             </div>
           </form>
@@ -223,16 +234,19 @@ export default {
         <table class="table">
           <thead>
             <tr>
-              <th scope="col" width="35%">Alloggio</th>
+              <th scope="col" width="30%">Alloggio</th>
+              <th scope="col" width="10%">Prezzo</th>
               <th scope="col" width="10%">Stanze</th>
               <th scope="col" width="10%">Letti</th>
-              <th scope="col" width="35%">Servizi</th>
+              <th scope="col" width="30%">Servizi</th>
               <th scope="col" width="10%">Distanza</th>
+              <th scope="col" width="10%">Scopri</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="estate in displayedEstates" :key="estate.id" height="50">
               <td> {{ estate.title }} </td>
+              <td> {{ estate.price }} €</td>
               <td> {{ estate.rooms }} </td>
               <td> {{ estate.beds }} </td>
               <td>
@@ -243,6 +257,11 @@ export default {
                 </ul>
               </td>
               <td> {{ printDistance(estate.distance) }} Km</td>
+              <td>
+                <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }" class="btn btn-outline-primary">
+                    Info
+                </RouterLink>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -260,8 +279,13 @@ export default {
   border: 2px solid transparent;
 }
 
+.itemService:hover{
+  color: black;
+}
+
 form {
   .iconService {
+    cursor: pointer;
     &:hover {
       color: #28a745;
       border: 2px solid #28a745;
@@ -281,7 +305,7 @@ form {
 }
 
 .form-label {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
