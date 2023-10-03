@@ -157,7 +157,7 @@ export default {
   <section class="searchPage">
     <div class="container">
       <!-- Title -->
-      <h2 class="mb-3">Ricerca Avanzata</h2>
+      <h2 class="my-3">Ricerca Avanzata</h2>
 
       <div class="card">
         <div class="card-body">
