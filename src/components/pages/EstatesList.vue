@@ -101,23 +101,25 @@ export default {
         <!-- search address -->
         <form @submit.prevent="sendForm">
             <div class="row">
-                <div class="addresses px-0 my-3 col-8 mx-auto">
+                <div class="addresses px-0 mt-3 col-8 mx-auto">
                     <div class="d-flex align-items-center position-relative">
                         <input id="searchAddress" type="text" class="form-control"
                             placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
-                            @keyup="fetchAddress($event.target.value)">
+                            @keyup="fetchAddress($event.target.value)" autocomplete="off">
                         <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
                                 class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
                         </div>
                     </div>
                 </div>
-                <div class="suggestedAddresses col-8 mx-auto">
-                    <ul class="list-group">
-                        <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
-                            class="liAddress list-group-item">
-                            <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
-                        </li>
-                    </ul>
+                <div class="col-8 mx-auto position-relative">                    
+                    <div class="suggestedAddresses">
+                        <ul class="list-group">
+                            <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
+                                class="liAddress list-group-item">
+                                <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </form>
@@ -155,4 +157,12 @@ export default {
     </main>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.suggestedAddresses{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+</style>

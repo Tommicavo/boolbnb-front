@@ -171,18 +171,20 @@ export default {
                   <div class="d-flex align-items-center position-relative">
                     <input id="searchAddress" type="text" class="form-control"
                       placeholder="Inizia a scrivere un indirizzo" v-model="form.place.address"
-                      @keyup="fetchAddress($event.target.value)">
+                      @keyup="fetchAddress($event.target.value)" autocomplete="off">
                     <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
                         class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
                   </div>
                 </div>
-                <div class="suggestedAddresses">
-                  <ul class="list-group">
-                    <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
-                      class="liAddress list-group-item">
-                      <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
-                    </li>
-                  </ul>
+                <div class="position-relative">
+                  <div class="suggestedAddresses">
+                    <ul class="list-group">
+                      <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
+                        class="liAddress list-group-item">
+                        <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
               <!-- radius -->
@@ -324,5 +326,13 @@ form {
 
 .filterSearchCard {
   border-radius: 1rem;
+}
+
+.suggestedAddresses{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 </style>
