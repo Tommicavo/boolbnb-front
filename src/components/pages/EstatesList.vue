@@ -5,7 +5,7 @@ import AppLoader from '@/components/AppLoader.vue';
 
 const searchForm = {
     place: { address: '', lon: null, lat: null },
-    radius: '20',
+    radius: '9999'
 };
 
 // Api Endpoints
@@ -30,18 +30,16 @@ export default {
                 return true;
             }
             return false;
-        },
-
+        }
     },
     methods: {
         sendForm() {
             this.estates = [];
-            const endpoint = 'http://127.0.0.1:8000/api/services/filter';
+            const endpoint = 'http://127.0.0.1:8000/api/estates/filter';
             axios.post(endpoint, this.form)
                 .then(res => {
-                    this.estates = res.data.withinRadiusEstates;
-                    console.log('Filtered Estates: ', this.estates);
-                    console.log(res.data);
+                    this.estates = res.data;
+                    console.log('RESULTS: ', this.estates);
                 })
                 .catch(err => { console.error(err) })
         },
@@ -56,14 +54,11 @@ export default {
             this.timeoutId = setTimeout(() => {
                 const endpoint = `${baseUri}${address}${params}${apiKey}`;
                 this.suggestedAddresses = [];
-                // console.log(endpoint);
 
                 axios.get(endpoint)
                     .then(res => {
                         const results = res.data.results;
-                        // console.log('results: ', results);
                         results.forEach(result => {
-                            // console.log('result: ', result.address.freeformAddress);
                             this.suggestedAddresses.push(result);
                         })
                     })
@@ -75,9 +70,8 @@ export default {
             this.form.place.lon = address.position.lon;
             this.form.place.lat = address.position.lat;
             this.isAddressSelected = true;
-            document.getElementById('filtersBtn').removeAttribute('disabled');
             document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
-            // console.log(`PLACE\naddress: ${this.form.place.address}\nlon: ${this.form.place.lon}\nlat: ${this.form.place.lat}`);
+            this.sendForm();
         },
         fetchestates(baseEndpoint = 'http://127.0.0.1:8000/api/estates/') {
             this.apiLoading = true;
@@ -89,23 +83,18 @@ export default {
                 .catch(err => { console.log(err) })
                 .then(() => { this.apiLoading = false })
         },
-
         resetAddress() {
             this.form.place.address = '';
             this.form.place.lon = null;
             this.form.place.lat = null;
             this.isAddressSelected = false;
-            document.getElementById('filtersBtn').setAttribute('disabled', 'disabled');
             document.getElementById('searchAddress').removeAttribute('readonly');
             document.getElementById('searchAddress').focus();
-        },
-        initForm() {
-            this.resetAddress();
-            this.form.radius = '20';
-        },
+            this.sendForm();
+        }
     },
     created() {
-        this.fetchestates();
+        this.sendForm();
     },
     beforeRouteEnter(to, from, next) {
         const callback = vm => {
@@ -119,46 +108,39 @@ export default {
 <template>
     <AppLoader v-if="apiLoading" />
     <main v-else class="container">
-
-        <div class="container">
-
-            <!--  <SearchForm @sendForm="sendForm" /> -->
-
-            <form @submit.prevent="sendForm">
-
-                <!-- search address -->
-                <div class="row ">
-                    <div class="addresses my-3 col-10">
-                        <div class="d-flex align-items-center position-relative">
-                            <input id="searchAddress" type="text" class="form-control"
-                                placeholder="Scegli un indirizzo da cercare" v-model="form.place.address"
-                                @keyup="fetchAddress($event.target.value)">
-                            <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
-                                    class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
-                            </div>
+        <!-- search address -->
+        <form @submit.prevent="sendForm">
+            <div class="row">
+                <div class="addresses px-0 my-3 col-12">
+                    <div class="d-flex align-items-center position-relative">
+                        <input id="searchAddress" type="text" class="form-control"
+                            placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
+                            @keyup="fetchAddress($event.target.value)">
+                        <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
+                                class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
                         </div>
                     </div>
-                    <button id="filtersBtn" type="submit" class="my-3 col-2 btn btn-primary " disabled>Trova
-                        Alloggi</button>
-                    <div class="suggestedAddresses">
-                        <ul class="list-group">
-                            <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
-                                class="liAddress list-group-item">
-                                <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
-                <!--   <div class="mb-3 d-flex justify-content-center align-items-center gap-3 col-1"> -->
+                <div class="col-10 suggestedAddresses">
+                    <ul class="list-group">
+                        <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
+                            class="liAddress list-group-item">
+                            <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
 
+        <AppLoader v-if="apiLoading" />
 
-
-
-            </form>
-
-
+        <div v-else>
             <!-- Hide if empty -->
-            <div v-if="estates.length" class="row">
+            <div v-if="estates.length" class="row 
+            row-cols-sm-1 justify-content-sm-center 
+                row-cols-md-2 justify-content-md-center 
+                row-cols-lg-4 justify-content-lg-start
+                row-cols-xl-6">
 
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
@@ -178,10 +160,9 @@ export default {
             <div v-else class="d-flex justify-content-center align-items-center mt-3">
                 <h1>Non ci sono progetti da visualizzare</h1>
             </div>
+
         </div>
-
-
     </main>
 </template>
 
-<style></style>
+<style scoped lang="scss"></style>

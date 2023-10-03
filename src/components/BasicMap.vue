@@ -9,11 +9,11 @@ export default {
         estate: Object
     },
     methods: {
-        setMap(){
+        setMap() {
             this.map = tt.map({
                 key: 'M67vYPGoqcGCwsgAOqnQFq8m8VRJHYoW',
                 container: 'map-div',
-                center: {lat: parseFloat(this.estate.latitude), lon: parseFloat(this.estate.longitude)},
+                center: { lat: parseFloat(this.estate.latitude), lon: parseFloat(this.estate.longitude) },
                 zoom: 12
             });
         }
@@ -40,7 +40,7 @@ export default {
 
 <style>
 #map-div {
-    width: 600px;
+    width: 100%;
     height: 400px;
     border: 0;
     border-radius: 1rem;

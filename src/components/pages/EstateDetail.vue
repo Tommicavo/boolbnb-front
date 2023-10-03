@@ -19,18 +19,23 @@ export default {
     }
   },
   methods: {
-    fetchEstate() {
+    async fetchEstate(endpoint=`${baseUri}${this.$route.params.id}`) {
       this.estateOk = false;
       this.apiLoading = true;
-      const endpoint = `${baseUri}${this.$route.params.id}`;
       axios.get(endpoint)
         .then(res => {
           this.estate = res.data;
+          console.log('ESTATE: ', this.estate);
           this.estateOk = true;
 
         })
         .catch(err => { console.log(err) })
         .then(() => { this.apiLoading = false })
+    },
+    async fetchNewEstate(newId){
+      const endpoint = `${baseUri}${newId}`;
+      await this.fetchEstate(endpoint);
+      this.$router.push({name: 'estate-detail', params: {id: newId}});
     }
   },
   created() {
@@ -42,8 +47,8 @@ export default {
 <template>
   <div class="container">
     <AppLoader v-if="apiLoading" />
-    <DetailedAppCard v-if="estateOk" :estate="estate" />
     <ContactForm :estate_id="estate.id" />
+    <DetailedAppCard v-if="estateOk" :estate="estate" @newEstate="fetchNewEstate"/>
   </div>
 </template>
 

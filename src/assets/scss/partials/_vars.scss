@@ -35,11 +35,9 @@ li:hover{
 #menuToggle {
     display: block;
     position: absolute;
-    top: 30px;
+    top: 40px;
     right: 50px;
-
     z-index: 1;
-
     -webkit-user-select: none;
     user-select: none;
 }
@@ -111,9 +109,10 @@ li:hover{
     position: absolute;
     width: 300px;
     margin: -100px 0 0 0;
-    padding: 50px;
+    padding: 25px;
     padding-top: 125px;
     right: -100px;
+    border-radius: 15px;
 
     background: #ffffff;
     list-style-type: none;
