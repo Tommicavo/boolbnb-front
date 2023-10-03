@@ -1,42 +1,37 @@
 <script></script>
 
 <template>
-    <div class="d-flex justify-content-center align-items-center">
-        <span class="loader"></span>
+    <div class="container row-cols-4 mt-5 shrink">
+        <div class="d-flex">
+            <div v-for="n in 10" class="cardGray d-flex flex-column justify-content-center p-3 me-3">
+                <div class="imageGray"></div>
+                <div class="titleGray"></div>
+                <div class="titleGray"></div>
+                <div class="titleGray"></div>
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-div {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
+.cardGray {
+    background-color: lightgray;
+    border-radius: 8px;
 
-h1 {
-    color: #54A7D7;
-}
-
-.loader {
-    border: 16px solid #f3f3f3;
-    /* Light grey */
-    border-top: 16px solid #3498db;
-    /* Blue */
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
+    .imageGray {
+        height: 80px;
+        width: 180px;
+        background-color: rgb(172, 171, 170);
+        border-radius: 8px;
     }
 
-    100% {
-        transform: rotate(360deg);
+    .titleGray {
+        height: 20px;
+        width: 80%;
+        margin-top: 10px;
+        background-color: rgb(172, 171, 170);
+        border-radius: 8px;
     }
+
 }
 </style>
