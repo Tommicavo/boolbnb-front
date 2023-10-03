@@ -4,18 +4,14 @@
 
         <nav class="container">
 
-
-
             <ul class="me-auto mb-2 mb-lg-0 nav1 d-flex align-items-center ">
-                <img src="../assets/assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
-              
-                <li>
+                <img src="../assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
+                <li class="me-2">
                     <RouterLink class="nav-link active a1" :to="{ name: 'estates' }">Annunci</RouterLink>
                 </li>
                 <li>
                     <RouterLink class="nav-link active" :to="{ name: 'search-page' }">Ricerca Avanzata</RouterLink>
                 </li>
-
             </ul>
             <nav role='navigation'>
                 <div id="menuToggle" class="hamburger">
