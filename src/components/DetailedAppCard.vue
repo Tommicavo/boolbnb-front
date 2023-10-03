@@ -3,45 +3,46 @@
 import BasicMap from '@/components/BasicMap.vue';
 
 export default {
-  name: 'DetailedAppCard',
-  data() {
-    return {}
-  },
-  components: {
-    BasicMap
-  },
-  props: {
-    estate: Object
-  },
-  emits: ['newEstate'],
-  computed: {
-    hasImages(){
-        return Boolean(this.estate.images.length);
-    }
-  },
-  methods: {
-    getImagePath(image){
-        const url = image.url;
-        return `http://127.0.0.1:8000/storage/${url}`;
+    name: 'DetailedAppCard',
+    data() {
+        return {}
     },
-    formatDates($in_date) {
-        const date = new Date($in_date);
+    components: {
+        BasicMap
+    },
+    props: {
+        estate: Object
+    },
+    emits: ['newEstate'],
+    computed: {
+        hasImages() {
+            return Boolean(this.estate.images.length);
+        }
+    },
+    methods: {
+        getImagePath(image) {
+            const url = image.url;
+            return `http://127.0.0.1:8000/storage/${url}`;
+        },
+        formatDates($in_date) {
+            const date = new Date($in_date);
 
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
+            let day = date.getDate();
+            let month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            let hours = date.getHours();
+            let minutes = date.getMinutes();
+            let seconds = date.getSeconds();
 
-        day = day < 10 ? '0' + day : day;
-        month = month < 10 ? '0' + month : month;
-        hours = hours < 10 ? '0' + hours : hours;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
+            day = day < 10 ? '0' + day : day;
+            month = month < 10 ? '0' + month : month;
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
 
-        const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
-        return out_date;
+            const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
+            return out_date;
+        }
     }
 }
 </script>
@@ -62,7 +63,7 @@ export default {
                 </button>
                 <button type="button" class="btn btn-primary" @click="$emit('newEstate', estate.nextId)">
                     <span class="mx-2">Successivo</span>
-                    <span><font-awesome-icon icon="fa-solid fa-forward" /></span>                
+                    <span><font-awesome-icon icon="fa-solid fa-forward" /></span>
                 </button>
             </div>
         </div>
@@ -176,7 +177,7 @@ export default {
     padding-bottom: 0.5rem;
 }
 
-.headerLeft{
+.headerLeft {
     position: absolute;
     left: 1rem;
 }

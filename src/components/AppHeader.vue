@@ -2,7 +2,7 @@
 <template>
     <header class="d-flex align-items-center justify-content-between container-fluid">
         <div class="flex-shrink-0 d-none d-sm-block">
-            <img src="../assets/assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
+            <img src="../assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
         </div>
         <nav class="flex-grow-1 ms-4 ms-sm-0 mt-5">
             <ul class="me-auto nav1 d-flex gap-4">
