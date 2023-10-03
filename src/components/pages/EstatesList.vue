@@ -106,13 +106,12 @@ export default {
 </script>
 
 <template>
-
     <AppLoader v-if="apiLoading" />
     <main v-else class="container">
         <!-- search address -->
         <form @submit.prevent="sendForm">
-            <div class="row ">
-                <div class="addresses ps-0 my-3 col-sm-9 col-lg-10">
+            <div class="row">
+                <div class="addresses ps-0 my-3 col-12">
                     <div class="d-flex align-items-center position-relative">
                         <input id="searchAddress" type="text" class="form-control"
                             placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
@@ -142,7 +141,6 @@ export default {
                 row-cols-md-2 justify-content-md-center 
                 row-cols-lg-4 justify-content-lg-start
                 row-cols-xl-6">
-                <div></div>
 
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
