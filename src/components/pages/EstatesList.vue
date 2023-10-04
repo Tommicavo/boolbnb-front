@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
-import AppLoader from '@/components/AppLoader.vue';
 
 const searchForm = {
     place: { address: '', lon: null, lat: null },
@@ -12,7 +11,7 @@ const searchForm = {
 const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
-    components: { AppCard, AppLoader },
+    components: { AppCard },
     data() {
         return {
             form: searchForm,
