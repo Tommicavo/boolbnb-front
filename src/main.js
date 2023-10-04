@@ -20,6 +20,7 @@ import { faForward } from '@fortawesome/free-solid-svg-icons'
 import { faRotate } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import AppLoader from './components/AppLoader.vue'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -32,7 +33,9 @@ library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder,
 // App
 const app = createApp(App);
 app.use(router);
+app.component('AppLoader', AppLoader);
 app.component('font-awesome-icon', FontAwesomeIcon);
+
 app.mount('#app');
 
 /*
