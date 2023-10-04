@@ -36,16 +36,12 @@ export default {
                     this.showToast = true;
                     // Chiudi il toast automaticamente dopo 5 secondi
                     setTimeout(() => {
-                        this.closeToast();
-                    }, 5000);
+                        this.showToast = false
+                    }, 3500);
                 })
                 .catch(error => {
                     console.error(error);
                 });
-        },
-
-        closeToast() {
-            this.showToast = false
         },
 
         validateForm() {
@@ -76,9 +72,8 @@ export default {
     <h2>Contatta il proprietario</h2>
     <div class="toast-container" :class="{ 'd-none': !showToast }">
         <div class="my-toast">
-            <div class="toast-header d-flex justify-content-between" data-bs-theme="dark">
+            <div class="my-toast-header d-flex justify-content-between" data-bs-theme="dark">
                 <strong class="me-auto">BoolBnB</strong>
-                <button class="btn-close" @click="showToast = false" aria-label="Close"></button>
             </div>
             <p class="my-2">Il tuo messaggio è stato inviato con successo!</p>
         </div>
@@ -145,7 +140,6 @@ export default {
     padding: 0 0.5rem;
 }
 
-/* Stili per il toast container */
 .toast-container {
     position: fixed;
     bottom: 20px;
@@ -157,7 +151,7 @@ export default {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.toast-header {
+.my-toast-header {
     width: 100%;
 }
 
