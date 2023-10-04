@@ -2,6 +2,7 @@
 import axios from 'axios';
 const baseUri = 'http://127.0.0.1:8000/api/messages';
 const emailJsValidationExp = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const toast = document.querySelector('.toast-container');
 
 export default {
     name: 'ContactForm',
@@ -16,12 +17,13 @@ export default {
                 text: '',
                 estate_id: null
             },
-            errors: {email: [], text: []}
+            showToast: false,
+            errors: { email: [], text: [] }
         };
     },
     methods: {
         sendForm() {
-            this.errors = {email: [], text: []};
+            this.errors = { email: [], text: [] };
             const errors = !this.validateForm();
             if (errors) return;
             this.form.estate_id = this.computedEstateId;
@@ -31,20 +33,30 @@ export default {
                     this.form.email = '';
                     this.form.name = '';
                     this.form.text = '';
+                    this.showToast = true;
+                    // Chiudi il toast automaticamente dopo 5 secondi
+                    setTimeout(() => {
+                        this.closeToast();
+                    }, 5000);
                 })
                 .catch(error => {
                     console.error(error);
                 });
         },
-        validateForm(){
+
+        closeToast() {
+            this.showToast = false
+        },
+
+        validateForm() {
             // email validation
-            if (!this.form.email){
+            if (!this.form.email) {
                 this.errors.email.push('L\'email è obbligatoria');
-            } else if (!this.form.email.match(emailJsValidationExp)){
+            } else if (!this.form.email.match(emailJsValidationExp)) {
                 this.errors.email.push('L\'email inserita non è valida');
             }
             // text validation
-            if (!this.form.text){
+            if (!this.form.text) {
                 this.errors.text.push('Scrivi un messaggio per il proprietario dell\'alloggio');
             }
             const hasErrors = Object.keys(this.errors).some(key => this.errors[key].length > 0);
@@ -61,7 +73,16 @@ export default {
 
 
 <template>
-    <h2 class="mt-5">Contatta il proprietario</h2>
+    <h2>Contatta il proprietario</h2>
+    <div class="toast-container" :class="{ 'd-none': !showToast }">
+        <div class="my-toast">
+            <div class="toast-header d-flex justify-content-between" data-bs-theme="dark">
+                <strong class="me-auto">BoolBnB</strong>
+                <button class="btn-close" @click="showToast = false" aria-label="Close"></button>
+            </div>
+            <p class="my-2">Il tuo messaggio è stato inviato con successo!</p>
+        </div>
+    </div>
     <div class="card mt-4">
         <div class="card-body">
             <form @submit.prevent="sendForm" novalidate>
@@ -70,7 +91,8 @@ export default {
                         <div>
                             <label for="email" class="form-label"><strong>Email <sup
                                         class="text-danger">*</sup></strong></label>
-                            <input v-model.trim="form.email" type="email" class="form-control" :class="{'is-invalid' : errors.email.length}" id="email" name="email"
+                            <input v-model.trim="form.email" type="email" class="form-control"
+                                :class="{ 'is-invalid': errors.email.length }" id="email" name="email"
                                 aria-describedby="emailHelp">
                         </div>
                         <div>
@@ -92,8 +114,8 @@ export default {
                         <div>
                             <label for="text" class="form-label"><strong>Messaggio<sup
                                         class="text-danger">*</sup></strong></label>
-                            <textarea v-model.trim="form.text" class="form-control" :class="{'is-invalid' : errors.text.length}" name="text" id="text"
-                                rows="5"></textarea>
+                            <textarea v-model.trim="form.text" class="form-control"
+                                :class="{ 'is-invalid': errors.text.length }" name="text" id="text" rows="5"></textarea>
                         </div>
                         <div>
                             <ul class="errorList">
@@ -119,7 +141,30 @@ export default {
     margin-right: 1rem;
 }
 
-.errorList{
+.errorList {
     padding: 0 0.5rem;
+}
+
+/* Stili per il toast container */
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.toast-header {
+    width: 100%;
+}
+
+.my-toast {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 </style>

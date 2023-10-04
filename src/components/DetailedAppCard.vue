@@ -1,6 +1,8 @@
 <script>
 
 import BasicMap from '@/components/BasicMap.vue';
+import ContactForm from './ContactForm.vue';
+
 
 export default {
     name: 'DetailedAppCard',
@@ -8,7 +10,7 @@ export default {
         return {}
     },
     components: {
-        BasicMap
+        ContactForm, BasicMap
     },
     props: {
         estate: Object
@@ -97,12 +99,8 @@ export default {
                 <p>{{ estate.description }}</p>
             </div>
 
-            <div class="card-body d-flex p-0 gap-3">
+            <div class="card-body d-flex p-0 gap-3  my-3">
                 <div class="left">
-                    <!-- map -->
-                    <BasicMap :estate="estate" />
-                </div>
-                <div class="right">
                     <div class="estateInfo row">
                         <div>
                             <span><strong>Stanze</strong></span>
@@ -132,16 +130,23 @@ export default {
                             <span><strong>Ultima modifica</strong></span>
                             <span>: {{ formatDates(estate.updated_at) }} </span>
                         </div>
+                        <div v-if="estate.services" class="estateServices d-flex align-items-center">
+                            <span><strong>Servizi: </strong></span>
+                            <span v-for="service in estate.services" :key="service.id">
+                                <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
+                            </span>
+                        </div>
                     </div>
+                </div>
+                <div class="right">
+                    <ContactForm :estate_id="estate.id" />
+
                 </div>
             </div>
             <!-- services -->
-            <div v-if="estate.services" class="estateServices d-flex align-items-center">
-                <span><strong>Servizi: </strong></span>
-                <span v-for="service in estate.services" :key="service.id">
-                    <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
-                </span>
-            </div>
+
+            <BasicMap :estate="estate" />
+
         </div>
     </div>
 </template>
@@ -186,11 +191,11 @@ export default {
     left: 1rem;
 }
 
-.card-body .left{
-    flex-basis: 70%;
+.card-body .left {
+    flex-basis: 50%;
 }
 
-.card-body .right{
-    flex-basis: 30%;
+.card-body .right {
+    flex-basis: 50%;
 }
 </style>
