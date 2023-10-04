@@ -98,8 +98,7 @@ export default {
 </script>
 
 <template>
-    <AppLoader v-if="apiLoading" />
-    <main v-else class="container">
+    <main class="container">
         <!-- search address -->
         <form @submit.prevent="sendForm">
             <div class="row">
@@ -113,7 +112,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="col-8 mx-auto position-relative">                    
+                <div class="col-8 mx-auto position-relative">
                     <div class="suggestedAddresses">
                         <ul class="list-group">
                             <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
@@ -160,7 +159,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-.suggestedAddresses{
+.suggestedAddresses {
     position: absolute;
     top: 0;
     left: 0;
