@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
-import AppLoader from '@/components/AppLoader.vue';
 
 const searchForm = {
     place: { address: '', lon: null, lat: null },
@@ -12,7 +11,7 @@ const searchForm = {
 const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
-    components: { AppCard, AppLoader },
+    components: { AppCard },
     data() {
         return {
             form: searchForm,
@@ -113,7 +112,7 @@ export default {
                         </div>
                     </div>
                 </div>
-                <div class="col-8 mx-auto position-relative">                    
+                <div class="col-8 mx-auto position-relative">
                     <div class="suggestedAddresses">
                         <ul class="list-group">
                             <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
@@ -160,7 +159,7 @@ export default {
 </template>
 
 <style scoped lang="scss">
-.suggestedAddresses{
+.suggestedAddresses {
     position: absolute;
     top: 0;
     left: 0;

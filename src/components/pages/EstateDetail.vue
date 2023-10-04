@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
-import AppLoader from '@/components/AppLoader.vue';
 import DetailedAppCard from '@/components/DetailedAppCard.vue';
 import ContactForm from '../ContactForm.vue';
 
@@ -10,7 +9,7 @@ const baseUri = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
   name: 'estateDetail',
-  components: { ContactForm, AppCard, AppLoader, DetailedAppCard },
+  components: { ContactForm, AppCard, DetailedAppCard },
   data() {
     return {
       estate: [],
