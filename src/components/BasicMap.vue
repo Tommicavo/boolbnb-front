@@ -22,8 +22,6 @@ export default {
                 center: { lat: parseFloat(this.estate.latitude), lon: parseFloat(this.estate.longitude) },
                 zoom: 15
             });
-            console.log(this.estate);
-
             const marker = new tt.Marker().setLngLat([this.estate.longitude, this.estate.latitude]).addTo(this.mapInstance);
         }
     }

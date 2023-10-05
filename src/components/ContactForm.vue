@@ -11,12 +11,12 @@ export default {
     },
     data() {
         return {
+            formLoading: false,
             form: {
                 email: '',
                 name: '',
                 text: '',
                 estate_id: null,
-                formLoading: false
             },
             showToast: false,
             errors: { email: [], text: [] }

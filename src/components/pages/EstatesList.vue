@@ -35,7 +35,6 @@ export default {
             axios.post(endpoint, this.form)
                 .then(res => {
                     this.estates = res.data;
-                    console.log('RESULTS: ', this.estates);
                 })
                 .catch(err => { console.error(err) })
                 .then(() => { this.apiLoading = false })
@@ -68,7 +67,7 @@ export default {
             this.form.place.lat = address.position.lat;
             document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
             setForm(this.form);
-            this.$router.push({name: 'search-page', query: {redirect: 'home'}});
+            this.$router.push({ name: 'search-page', query: { redirect: 'home' } });
         }
     },
     mounted() {

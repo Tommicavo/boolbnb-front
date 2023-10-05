@@ -23,7 +23,6 @@ export default {
       axios.get(endpoint)
         .then(res => {
           this.estate = res.data;
-          console.log('ESTATE: ', this.estate);
           this.estateOk = true;
 
         })
