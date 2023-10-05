@@ -19,6 +19,7 @@ import { faBackward } from '@fortawesome/free-solid-svg-icons'
 import { faForward } from '@fortawesome/free-solid-svg-icons'
 import { faRotate } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import AppLoader from './components/AppLoader.vue'
 
@@ -28,7 +29,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 
 // Generics Components
 
-library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation);
+library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation, faCircleNotch);
 
 // App
 const app = createApp(App);

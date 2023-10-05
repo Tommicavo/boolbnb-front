@@ -15,8 +15,8 @@ export default {
 }
 </script>
 
-<template>
-    <div class="card text-bg-dark p-0 g-4">
+<template class="row">
+    <div class="card text-bg-dark p-0 g-4 col-4">
         <figure>
             <img :src="getImagePath" class="card-img-top" alt="...">
         </figure>
@@ -52,11 +52,13 @@ export default {
 }
 
 figure {
-    height: 50%;
+    height: 100%;
+    object-fit: cover;
 }
 
 img {
     object-fit: cover;
-    height: 100%;
+    height: 150px;
+    width: 250px;
 }
 </style>

@@ -15,7 +15,8 @@ export default {
                 email: '',
                 name: '',
                 text: '',
-                estate_id: null
+                estate_id: null,
+                formLoading: false
             },
             showToast: false,
             errors: { email: [], text: [] }
@@ -27,6 +28,7 @@ export default {
             const errors = !this.validateForm();
             if (errors) return;
             this.form.estate_id = this.computedEstateId;
+            this.formLoading = true;
             axios.post(baseUri, this.form)
                 .then(response => {
                     console.log('DATA: ', response.data);
@@ -34,14 +36,14 @@ export default {
                     this.form.name = '';
                     this.form.text = '';
                     this.showToast = true;
-                    // Chiudi il toast automaticamente dopo 5 secondi
+                    // Chiudi il toast automaticamente dopo 2.5 secondi
                     setTimeout(() => {
                         this.showToast = false
-                    }, 3500);
+                    }, 2500);
                 })
                 .catch(error => {
                     console.error(error);
-                });
+                }).then(() => { this.formLoading = false })
         },
 
         validateForm() {
@@ -81,6 +83,9 @@ export default {
     <div class="card mt-4">
         <div class="card-body">
             <form @submit.prevent="sendForm" novalidate>
+
+                <AppLoader v-if="formLoading" :form="true" class="appLoader" />
+
                 <div class="row d-flex justify-content-end">
                     <div class="col-6">
                         <div>
@@ -131,6 +136,21 @@ export default {
 
 
 <style scoped>
+form {
+    position: relative;
+}
+
+.appLoader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.555);
+    z-index: 2;
+    border-radius: 8px;
+}
+
 .btn {
     width: 100px;
     margin-right: 1rem;
