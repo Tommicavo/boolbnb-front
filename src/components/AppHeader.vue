@@ -21,14 +21,11 @@
                 <span></span>
                 <span></span>
                 <ul id="menu">
-                    <a href="#">
+                    <a href="http://127.0.0.1:8000/register">
                         <li class="hamburger_li">Registrati</li>
                     </a>
-                    <a href="#">
+                    <a href="http://127.0.0.1:8000/login">
                         <li class="hamburger_li">Accedi</li>
-                    </a>
-                    <a href="#">
-                        <li class="hamburger_li">Affitta con BoolBnb</li>
                     </a>
                 </ul>
             </div>
