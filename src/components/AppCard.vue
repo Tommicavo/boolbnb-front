@@ -15,26 +15,32 @@ export default {
 }
 </script>
 
-<template class="row">
-    <div class="card text-bg-dark p-0 g-4 col-4">
-        <figure>
-            <img :src="getImagePath" class="card-img-top" alt="...">
-        </figure>
-        <div class="card-body d-flex flex-column justify-content-between">
-            <div>
-                <div class="heart" style:> &#10084;</div>
-                <h5 class="card-title">{{ data.title }}</h5>
-                <p class="card-text">{{ data.description }}</p>
+<template>
+    <div class="container d-flex justify-content-center">
+        <div class="card p-0 mt-5 m-1">
+            <figure>
+                <img :src="getImagePath" class="card-img-top" alt="...">
+            </figure>
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                    <div class="heart" style:> &#10084;</div>
+                    <h5 class="card-title">{{ data.title }}</h5>
+                    <p class="card-text">{{ data.description }}</p>
+                </div>
+                <!-- Show Button -->
+                <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary mx-3">
+                    Dettaglio
+                </RouterLink>
             </div>
-            <!-- Show Button -->
-            <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary mx-3">
-                Dettaglio
-            </RouterLink>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
+.card {
+    cursor: pointer;
+}
+
 .heart {
     width: 10px;
     height: 15px;
@@ -52,13 +58,11 @@ export default {
 }
 
 figure {
-    height: 100%;
-    object-fit: cover;
+    width: 100%;
+    overflow: hidden;
 }
 
 img {
-    object-fit: cover;
-    height: 150px;
-    width: 250px;
+    object-fit: contain;
 }
 </style>
