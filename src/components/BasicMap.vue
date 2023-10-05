@@ -3,26 +3,23 @@ export default {
     props: {
         estate: Object,
     },
-    data() {
-        return {};
-    },
     created() {
         this.mapInstance = null;
     },
     mounted() {
-        this.$nextTick(() => {
-            this.setMap();
-        });
+        this.setMap();
     },
     methods: {
         setMap() {
             this.mapInstance = tt.map({
                 key: 'M67vYPGoqcGCwsgAOqnQFq8m8VRJHYoW',
                 container: 'map-div',
-                center: { lat: parseFloat(this.estate.latitude), lon: parseFloat(this.estate.longitude) },
-                zoom: 15
+                center: { lat: this.estate.latitude, lon: this.estate.longitude },
+                zoom: 16
             });
-            const marker = new tt.Marker().setLngLat([this.estate.longitude, this.estate.latitude]).addTo(this.mapInstance);
+
+            // Marker
+            new tt.Marker().setLngLat([this.estate.longitude, this.estate.latitude]).addTo(this.mapInstance);
         }
     }
 }
@@ -63,6 +60,3 @@ export default {
     border-top-right-radius: 1rem;
 }
 </style>
-﻿
-Athesis
-athesis_
