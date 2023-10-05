@@ -1,5 +1,8 @@
 <script>
+
 import axios from 'axios';
+import { getForm } from '@/assets/data/sharedDataService.js';
+
 const searchForm = {
   place: { address: '', lon: null, lat: null },
   radius: '20',
@@ -15,7 +18,7 @@ export default {
       services: [],
       filteredEstates: [],
       addressTimeoutId: null,
-      radiusTimeoutId: null,
+      filtersTimeoutId: null,
       suggestedAddresses: [],
       isAddressSelected: false
     }
@@ -42,22 +45,6 @@ export default {
         return true;
       }
       return false;
-    },
-    displayedEstates() {
-      return this.filteredEstates.filter(estate => {
-
-        // Filtra per il numero minimo di stanze
-        if (estate.rooms < this.form.minRooms) return false;
-
-        // Filtra per il numero minimo di letti
-        if (estate.beds < this.form.minBeds) return false;
-
-        // Filtra per i servizi selezionati
-        return Object.keys(this.form.services).every(serviceKey => {
-          if (!this.form.services[serviceKey]) return true;
-          return estate.services.some(service => service.label === serviceKey);
-        });
-      });
     }
   },
   methods: {
@@ -114,12 +101,24 @@ export default {
       document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
       this.sendForm();
     },
-    radiusChanged() {
-      clearTimeout(this.radiusTimeoutId);
-      this.radiusTimeoutId = setTimeout(() => {
+    autoSelectPlace(query){
+      this.suggestedAddresses = [];
+      this.form.place.address = query.place.address;
+      this.form.place.lon = query.place.lon;
+      this.form.place.lat = query.place.lat;
+      document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
+      this.isAddressSelected = true;
+      this.sendForm();
+    },
+    filtersChanged() {
+      clearTimeout(this.filtersTimeoutId);
+      this.filtersTimeoutId = setTimeout(() => {
         console.log('clicked');
         if (this.isAddressSelected) this.sendForm();
       }, 250);
+    },
+    servicesChanged(){
+      if (this.isAddressSelected) this.sendForm();
     },
     resetAddress() {
       this.filteredEstates = [];
@@ -139,16 +138,17 @@ export default {
       this.form.minRooms = '1';
       this.form.minBeds = '1';
       this.form.services = {};
+    },
+    checkRoute(){
+      if (this.$route.query.redirect != 'home') return;
+      const query = getForm();
+      console.log('QUERY: ', query);
+      this.autoSelectPlace(query);
     }
   },
-  created() {
+  mounted() {
+    this.checkRoute();
     this.fetchServices();
-  },
-  beforeRouteEnter(to, from, next) {
-    const callback = vm => {
-      vm.form.place.address = '';
-    }
-    next(callback);
   }
 }
 </script>
@@ -192,27 +192,29 @@ export default {
                 <label for="radius" class="form-label">Nel raggio di</label>
                 <div class="input-group">
                   <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius"
-                    @keyup="radiusChanged">
+                    @keyup="filtersChanged">
                   <span class="input-group-text">Km</span>
                 </div>
               </div>
               <!-- min rooms -->
               <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minRooms" class="form-label">Stanze</label>
-                <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms">
+                <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms"
+                @keyup="filtersChanged">
               </div>
               <!-- min beds -->
               <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minBeds" class="form-label">Letti</label>
-                <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds">
+                <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds"
+                @keyup="filtersChanged">
               </div>
-
 
               <!-- services -->
               <div class="col-sm-8 col-md-12 text-center mb-3">
                 <h4 class="py-3">Seleziona i servizi che desideri</h4>
                 <div v-for="service in services" :key="service.id" class="form-check form-check-inline">
-                  <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]">
+                  <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]"
+                  @change="servicesChanged">
                   <label :for="service.label"><font-awesome-icon
                       :class="['iconService', { 'iconSelected': form.services[service.label] }]"
                       :icon="'fa-solid fa-' + service.icon" /></label>
@@ -250,7 +252,7 @@ export default {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="estate in displayedEstates" :key="estate.id" height="50">
+            <tr v-for="estate in filteredEstates" :key="estate.id" height="50">
               <td> {{ estate.title }} </td>
               <td> {{ estate.price }} €</td>
               <td> {{ estate.rooms }} </td>

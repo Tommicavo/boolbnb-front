@@ -1,14 +1,11 @@
 <script>
 import axios from 'axios';
 import AppCard from '@/components/AppCard.vue';
+import { setForm } from '@/assets/data/sharedDataService.js';
 
 const searchForm = {
-    place: { address: '', lon: null, lat: null },
-    radius: '9999'
+    place: { address: '', lon: null, lat: null }
 };
-
-// Api Endpoints
-const baseEndpoint = 'http://127.0.0.1:8000/api/estates/'
 
 export default {
     components: { AppCard },
@@ -16,7 +13,6 @@ export default {
         return {
             form: searchForm,
             suggestedAddresses: [],
-            isAddressSelected: false,
             estates: [],
             apiLoading: false,
             timeoutId: null,
@@ -49,7 +45,7 @@ export default {
             const params = '.json?limit=5&countrySet=IT';
             const apiKey = '&key=GhG6A9t2m9I7jUfG0xLAixmH1Nk7leZa';
 
-            if (this.isAddressFieldEmpty || this.isAddressSelected) return;
+            if (this.isAddressFieldEmpty) return;
 
             clearTimeout(this.timeoutId);
             this.timeoutId = setTimeout(() => {
@@ -70,28 +66,14 @@ export default {
             this.form.place.address = address.address.freeformAddress;
             this.form.place.lon = address.position.lon;
             this.form.place.lat = address.position.lat;
-            this.isAddressSelected = true;
             document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
-            this.sendForm();
-        },
-        resetAddress() {
-            this.form.place.address = '';
-            this.form.place.lon = null;
-            this.form.place.lat = null;
-            this.isAddressSelected = false;
-            document.getElementById('searchAddress').removeAttribute('readonly');
-            document.getElementById('searchAddress').focus();
-            this.sendForm();
+            setForm(this.form);
+            this.$router.push({name: 'search-page', query: {redirect: 'home'}});
         }
     },
-    created() {
+    mounted() {
+        this.form.place.address = '';
         this.sendForm();
-    },
-    beforeRouteEnter(to, from, next) {
-        const callback = vm => {
-            vm.form.place.address = '';
-        }
-        next(callback);
     }
 }
 </script>
@@ -99,16 +81,13 @@ export default {
 <template>
     <main class="container">
         <!-- search address -->
-        <form @submit.prevent="sendForm">
+        <form>
             <div class="row">
                 <div class="addresses px-0 mt-3 col-8 mx-auto">
                     <div class="d-flex align-items-center position-relative">
                         <input id="searchAddress" type="text" class="form-control"
                             placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
                             @keyup="fetchAddress($event.target.value)" autocomplete="off">
-                        <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
-                                class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" />
-                        </div>
                     </div>
                 </div>
                 <div class="col-8 mx-auto position-relative">
