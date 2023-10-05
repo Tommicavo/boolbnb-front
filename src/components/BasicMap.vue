@@ -1,25 +1,31 @@
 <script>
 export default {
-    data() {
-        return {
-            map: null
-        };
-    },
     props: {
-        estate: Object
+        estate: Object,
+    },
+    data() {
+        return {};
+    },
+    created() {
+        this.mapInstance = null;
+    },
+    mounted() {
+        this.$nextTick(() => {
+            this.setMap();
+        });
     },
     methods: {
         setMap() {
-            this.map = tt.map({
+            this.mapInstance = tt.map({
                 key: 'M67vYPGoqcGCwsgAOqnQFq8m8VRJHYoW',
                 container: 'map-div',
                 center: { lat: parseFloat(this.estate.latitude), lon: parseFloat(this.estate.longitude) },
-                zoom: 12
+                zoom: 15
             });
+            console.log(this.estate);
+
+            const marker = new tt.Marker().setLngLat([this.estate.longitude, this.estate.latitude]).addTo(this.mapInstance);
         }
-    },
-    mounted() {
-        this.setMap();
     }
 }
 
@@ -27,7 +33,7 @@ export default {
 
 <template>
     <div class="addressCard">
-        <div class="card-header headerAddress myclass p-2">
+        <div class="card-header headerAddress  p-2">
             <div class="address">
                 <span><strong>Indirizzo</strong></span>
                 <span>: {{ estate.address }}</span>
@@ -52,10 +58,13 @@ export default {
     border-bottom-right-radius: 1rem;
 }
 
-.addressCard .card-header.headerAddress{
+.addressCard .card-header.headerAddress {
     padding: 0;
     margin: 0;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
 }
 </style>
+﻿
+Athesis
+athesis_
