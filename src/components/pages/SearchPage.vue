@@ -101,7 +101,7 @@ export default {
       document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
       this.sendForm();
     },
-    autoSelectPlace(query){
+    autoSelectPlace(query) {
       this.suggestedAddresses = [];
       this.form.place.address = query.place.address;
       this.form.place.lon = query.place.lon;
@@ -117,7 +117,7 @@ export default {
         if (this.isAddressSelected) this.sendForm();
       }, 250);
     },
-    servicesChanged(){
+    servicesChanged() {
       if (this.isAddressSelected) this.sendForm();
     },
     resetAddress() {
@@ -139,7 +139,7 @@ export default {
       this.form.minBeds = '1';
       this.form.services = {};
     },
-    checkRoute(){
+    checkRoute() {
       if (this.$route.query.redirect != 'home') return;
       const query = getForm();
       console.log('QUERY: ', query);
@@ -188,26 +188,26 @@ export default {
                   </div>
                 </div>
               </div>
+
               <!-- radius -->
               <div class="col-sm-6 col-lg-2 mb-3">
-                <label for="radius" class="form-label">Nel raggio di</label>
-                <div class="input-group">
-                  <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius"
-                    @keyup="filtersChanged">
-                  <span class="input-group-text">Km</span>
-                </div>
+                <label for="range" class="form-label mb-3">Nel raggio di {{ form.radius }} Km</label>
+                <input type="range" class="form-range" min="10" max="200" step="5" id="range" v-model="form.radius"
+                  @input="filtersChanged">
               </div>
+
               <!-- min rooms -->
               <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minRooms" class="form-label">Stanze</label>
                 <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms"
-                @keyup="filtersChanged">
+                  @keyup="filtersChanged">
               </div>
+
               <!-- min beds -->
               <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minBeds" class="form-label">Letti</label>
                 <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds"
-                @keyup="filtersChanged">
+                  @keyup="filtersChanged">
               </div>
 
               <!-- services -->
@@ -215,7 +215,7 @@ export default {
                 <h4 class="py-3">Seleziona i servizi che desideri</h4>
                 <div v-for="service in services" :key="service.id" class="form-check form-check-inline">
                   <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]"
-                  @change="servicesChanged">
+                    @change="servicesChanged">
                   <label :for="service.label"><font-awesome-icon
                       :class="['iconService', { 'iconSelected': form.services[service.label] }]"
                       :icon="'fa-solid fa-' + service.icon" /></label>
@@ -226,7 +226,7 @@ export default {
               <div class="d-flex align-items-center justify-content-center my-3">
                 <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
                   :disabled="isFilterReset">
-                  <span><font-awesome-icon icon="fa-solid fa-rotate" /></span>
+                  <span><font-awesome-icon icon="fa-solid fa-rotate" /> Reset</span>
                 </button>
               </div>
 
@@ -331,7 +331,7 @@ form {
   border-radius: 1rem;
 }
 
-.suggestedAddresses{
+.suggestedAddresses {
   position: absolute;
   top: 0;
   left: 0;

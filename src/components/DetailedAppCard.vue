@@ -169,8 +169,7 @@ export default {
 }
 
 .estateImg {
-    min-width: 420px;
-    max-width: 100%;
+    width: 600px;
     height: 500px;
     margin: 0 auto;
 }
