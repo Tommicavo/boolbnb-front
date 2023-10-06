@@ -9,6 +9,8 @@ export default {
             if (this.data.images[0]) {
                 const url = this.data.images[0].url;
                 return `http://127.0.0.1:8000/storage/${url}`;
+            } else {
+                return 'https://picsum.photos/200/300';
             }
         }
     },
