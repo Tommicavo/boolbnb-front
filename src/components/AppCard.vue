@@ -11,6 +11,15 @@ export default {
                 return `http://127.0.0.1:8000/storage/${url}`;
             }
         }
+    },
+    //metodo per il troncamento del testo
+    methods: {
+        truncateText(value, limit) {
+            if (value.length > limit) {
+                return value.substring(0, limit) + '...';
+            }
+            return value;
+        }
     }
 }
 </script>
@@ -18,14 +27,14 @@ export default {
 <template>
     <div class="container d-flex justify-content-center">
         <div class="card p-0 mb-3">
-            <figure>
-                <img :src="getImagePath" class="card-img-top" alt="...">
-            </figure>
+
+            <img :src="getImagePath" class="card-img-top" alt="...">
+
             <div class="card-body d-flex flex-column justify-content-between">
-                <div>
+                <div class="mb-2">
                     <div class="heart" style:> &#10084;</div>
                     <h5 class="card-title">{{ data.title }}</h5>
-                    <p class="card-text">{{ data.description }}</p>
+                    <p class="card-text">{{ truncateText(data.description, 50) }}</p>
                 </div>
                 <!-- Show Button -->
                 <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary mx-3">
@@ -39,6 +48,11 @@ export default {
 <style scoped lang="scss">
 .card {
     cursor: pointer;
+    width: 100%;
+
+    img {
+        object-fit: cover;
+    }
 }
 
 .heart {
@@ -55,14 +69,5 @@ export default {
     color: #FFBD59;
     opacity: 1;
     cursor: pointer;
-}
-
-figure {
-    width: 100%;
-    overflow: hidden;
-}
-
-img {
-    object-fit: cover;
 }
 </style>
