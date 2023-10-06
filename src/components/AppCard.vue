@@ -63,6 +63,6 @@ figure {
 }
 
 img {
-    object-fit: contain;
+    object-fit: cover;
 }
 </style>
