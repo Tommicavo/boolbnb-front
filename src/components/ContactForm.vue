@@ -81,7 +81,7 @@ export default {
         </div>
     </div>
     <div class="card mt-4">
-        <div class="card-body">
+        <div class="card-body shadow">
             <form @submit.prevent="sendForm" novalidate>
 
                 <AppLoader v-if="formLoading" :form="true" class="appLoader" />
@@ -168,7 +168,11 @@ form {
     color: #fff;
     padding: 10px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    ;
+}
+
+.shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)
 }
 
 .my-toast-header {
