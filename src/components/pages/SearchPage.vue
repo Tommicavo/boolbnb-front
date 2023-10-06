@@ -187,21 +187,21 @@ export default {
                   </div>
                 </div>
               </div>
+
               <!-- radius -->
               <div class="col-sm-6 col-lg-2 mb-3">
-                <label for="radius" class="form-label">Nel raggio di</label>
-                <div class="input-group">
-                  <input id="radius" type="tel" class="form-control" placeholder="Raggio" v-model="form.radius"
-                    @keyup="filtersChanged">
-                  <span class="input-group-text">Km</span>
-                </div>
+                <label for="range" class="form-label mb-3">Nel raggio di {{ form.radius }} Km</label>
+                <input type="range" class="form-range" min="10" max="200" step="5" id="range" v-model="form.radius"
+                  @input="filtersChanged">
               </div>
+
               <!-- min rooms -->
               <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minRooms" class="form-label">Stanze</label>
                 <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms"
                   @keyup="filtersChanged">
               </div>
+
               <!-- min beds -->
               <div class="col-sm-3 col-lg-1 mb-3">
                 <label for="minBeds" class="form-label">Letti</label>
