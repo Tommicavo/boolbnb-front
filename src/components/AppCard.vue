@@ -10,6 +10,9 @@ export default {
                 const url = this.data.images[0].url;
                 return `http://127.0.0.1:8000/storage/${url}`;
             }
+        },
+        isEstateSponsored(){
+            return this.data.endSponsor !== null;
         }
     }
 }
@@ -18,6 +21,9 @@ export default {
 <template>
     <div class="container d-flex justify-content-center">
         <div class="card p-0 mt-5 m-1">
+            <div v-if="isEstateSponsored" class="sponsorMark">
+                <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
+            </div>
             <figure>
                 <img :src="getImagePath" class="card-img-top" alt="...">
             </figure>
@@ -39,6 +45,7 @@ export default {
 <style scoped lang="scss">
 .card {
     cursor: pointer;
+    overflow: hidden;
 }
 
 .heart {
@@ -64,5 +71,18 @@ figure {
 
 img {
     object-fit: contain;
+}
+
+.sponsorMark{
+    width: 130px;
+    height: 25px;
+    background-color: gold;
+    transform: rotate(-45deg);
+    translate: -35px 15px;
+    position: absolute;
+    text-align: center;
+    border: 2px solid black;
+    font-weight: 500;
+    line-height: 20px;
 }
 </style>
