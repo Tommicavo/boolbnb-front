@@ -17,7 +17,7 @@ export default {
 
 <template>
     <div class="container d-flex justify-content-center">
-        <div class="card p-0 mt-5 m-1">
+        <div class="card p-0 mb-3">
             <figure>
                 <img :src="getImagePath" class="card-img-top" alt="...">
             </figure>
