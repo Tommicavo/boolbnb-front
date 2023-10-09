@@ -147,6 +147,7 @@ export default {
     }
   },
   mounted() {
+    this.form.place.address = '';
     this.checkRoute();
     this.fetchServices();
   }

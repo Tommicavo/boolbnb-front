@@ -21,31 +21,21 @@ import { faRotate } from '@fortawesome/free-solid-svg-icons'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
-import AppLoader from './components/AppLoader.vue'
+import { faRectangleAd } from '@fortawesome/free-solid-svg-icons'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 
 // Generics Components
+import AppLoader from './components/AppLoader.vue'
 
-library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation, faCircleNotch);
+// Including fontawesome icon
+library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation, faCircleNotch, faRectangleAd);
 
 // App
 const app = createApp(App);
 app.use(router);
 app.component('AppLoader', AppLoader);
 app.component('font-awesome-icon', FontAwesomeIcon);
-
 app.mount('#app');
-
-/*
-FontAwesome component of services icon:
-
-<font-awesome-icon icon="fa-solid fa-square-parking" />     <!-- square-parking -->
-<font-awesome-icon icon="fa-solid fa-wifi" />     <!-- wifi -->
-<font-awesome-icon icon="fa-solid fa-kitchen-set" />     <!-- kitchen-set -->
-<font-awesome-icon icon="fa-solid fa-tv" />     <!-- tv -->
-<font-awesome-icon icon="fa-solid fa-water-ladder" />     <!-- water-ladder -->
-<font-awesome-icon icon="fa-solid fa-user-tie" />     <!-- user-tie -->
-*/

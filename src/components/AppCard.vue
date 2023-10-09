@@ -12,6 +12,9 @@ export default {
             } else {
                 return 'https://picsum.photos/200/300';
             }
+        },
+        isEstateSponsored(){
+            return this.data.endSponsor !== null;
         }
     },
     //metodo per il troncamento del testo
@@ -28,6 +31,9 @@ export default {
 
 <template>
     <div class="estate-card rounded">
+        <div v-if="isEstateSponsored" class="sponsorMark">
+            <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
+        </div>
         <figure class="rounded-top position-relative">
             <img :src="getImagePath" alt="Immagine">
             <div class="heart"> &#10084;</div>
@@ -35,6 +41,7 @@ export default {
         <div class="estate-info">
             <div class="d-flex justify-content-between align-items-start">
                 <h5 class="mb-0">{{ data.title }}</h5>
+                <!-- Show Button -->
                 <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary">
                     Dettagli
                 </RouterLink>
@@ -111,5 +118,18 @@ export default {
         opacity: 1;
         cursor: pointer;
     }
+}
+
+.sponsorMark{
+    width: 130px;
+    height: 25px;
+    background-color: gold;
+    transform: rotate(-45deg);
+    translate: -35px 15px;
+    position: absolute;
+    text-align: center;
+    border: 2px solid black;
+    font-weight: 500;
+    line-height: 20px;
 }
 </style>

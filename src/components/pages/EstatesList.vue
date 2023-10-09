@@ -35,6 +35,7 @@ export default {
             axios.post(endpoint, this.form)
                 .then(res => {
                     this.estates = res.data;
+                    console.log('RESULTS: ', this.estates);
                 })
                 .catch(err => { console.error(err) })
                 .then(() => { this.apiLoading = false })
@@ -107,29 +108,15 @@ export default {
         <div v-else>
             <!-- Hide if empty -->
             <div v-if="estates.length" class="row 
-            row-cols-sm-1 justify-content-sm-center 
+            row-cols-sm-1 justify-content-sm-center
                 row-cols-md-4
                 row-cols-lg-6">
-
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
-
-                <!-- Pagination Navbar -->
-                <!-- <nav>
-                    <ul class="pagination">
-                        <li v-for="element in estates.links" :key="element.label" class="page-item">
-                            <button :disabled="!element.url" :class="{ active: element.active }" class="page-link"
-                                v-html="element.label" @click="fetchestates(element.url)"></button>
-                        </li>
-                    </ul>
-                </nav> -->
-
             </div>
-
             <div v-else class="d-flex justify-content-center align-items-center mt-3">
                 <h1>Non ci sono progetti da visualizzare</h1>
             </div>
-
         </div>
     </main>
 </template>
