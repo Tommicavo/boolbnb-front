@@ -184,24 +184,24 @@ export default {
 }
 
 .bt-home {
-    background-color: $logo-color;
+    background-color: #396E91;
     color: $bg-lightgrey;
     transition: background-color 0.3s;
 
     &:hover {
         background-color: $bg-lightgrey;
-        color: $logo-color;
+        color: #396E91;
     }
 }
 
 .bt-slide {
-    background-color: $darkBlue;
+    background-color: #396E91;
     color: $bg-lightgrey;
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: $lightGray;
-        color: $darkBlue;
+        background-color: #EBEEED;
+        color: #396E91;
     }
 }
 
