@@ -4,37 +4,14 @@
 @use './partials/icons';
 @use './partials/searchPage';
 
-// Body 
-body {
+// Total
+* {
     font-family: 'Montserrat', sans-serif;
 }
 
 // All the <a>
 a {
     text-decoration: none;
-}
-
-// All list
-ul li {
-    list-style-type: none;
-}
-
-ul {
-    padding: 0;
-}
-
-
-body {
-    margin: 0;
-    padding: 0;
-
-
-    overflow-x: hidden;
-}
-
-a {
-    text-decoration: none;
-
     transition: color 0.3s ease;
 }
 
@@ -42,21 +19,24 @@ a:hover {
     color: #FFBD59;
 }
 
-li {
-
-    transition: color 0.3s ease;
+// All list
+ul {
+    padding: 0;
 }
 
-li:hover {
+ul li {
+    list-style-type: none;
+    transition: color 0.3s ease;
 
-    color: #FFBD59;
+    &:hover {
+        color: #FFBD59;
+    }
 }
 
 .card-img-top {
     height: 110px;
     width: 150px;
 }
-
 
 #menuToggle {
     display: block;
@@ -83,7 +63,6 @@ li:hover {
 
     -webkit-touch-callout: none;
 }
-
 
 #menuToggle span {
     display: block;
@@ -119,12 +98,10 @@ li:hover {
     background: #213644;
 }
 
-
 #menuToggle input:checked~span:nth-last-child(3) {
     opacity: 0;
     transform: rotate(0deg) scale(0.2, 0.2);
 }
-
 
 #menuToggle input:checked~span:nth-last-child(2) {
     opacity: 1;
@@ -139,14 +116,11 @@ li:hover {
     padding-top: 125px;
     right: -100px;
     border-radius: 15px;
-
     background: #ffffff;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
-
     transform-origin: 0% 0%;
     transform: translate(100%, 0);
-
     transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
 }
 
@@ -154,7 +128,6 @@ li:hover {
     padding: 10px 0;
     font-size: 22px;
 }
-
 
 #menuToggle input:checked~ul {
     transform: none;
