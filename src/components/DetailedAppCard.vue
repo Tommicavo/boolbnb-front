@@ -192,7 +192,7 @@ export default {
 }
 
 .estateImg {
-    width: 800px;
+    width: 100%;
     height: 500px;
     margin: 0 auto;
     object-fit: cover;
