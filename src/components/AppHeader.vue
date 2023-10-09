@@ -7,8 +7,13 @@
             </div>
         </RouterLink>
 
+        <span class="badge d-flex align-items-center justify-content-center rounded-pill"><span id="search-icon">Ricerca
+                avanzata</span><font-awesome-icon class="ms-1" :icon="['fas', 'magnifying-glass']" /></span>
 
-        <nav role='navigation'>
+        <font-awesome-icon icon="fa-solid fa-house" />
+
+
+        <!--  <nav role='navigation'>
             <div id="menuToggle" class="hamburger">
                 <input type="checkbox" />
                 <span></span>
@@ -23,7 +28,7 @@
                     </li>
                 </ul>
             </div>
-        </nav>
+        </nav> -->
     </header>
 </template>
 <style scoped lang="scss">
@@ -35,140 +40,41 @@ a {
     transition: color 0.3s ease;
 }
 
-a:hover {
-    color: #FFBD59;
-}
 
-li {
-
-    transition: color 0.3s ease;
-}
-
-li:hover {
-
-    color: #FFBD59;
-}
-
-#menuToggle {
-    display: block;
-    position: absolute;
-    top: 40px;
-    right: 50px;
-    z-index: 1;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-#menuToggle input {
-    display: block;
-    width: 40px;
-    height: 32px;
-    position: absolute;
-    top: -7px;
-    left: -5px;
-
+.badge:hover {
+    background-color: #FF9C2E;
     cursor: pointer;
-
-    opacity: 0;
-    z-index: 2;
-
-    -webkit-touch-callout: none;
-}
+    transition: background-color 0.5s ease;
+    width: 190px;
+    transition: width 0.5s ease;
 
 
-#menuToggle span {
-    display: block;
-    width: 33px;
-    height: 4px;
-    margin-bottom: 5px;
-    position: relative;
-
-    background: #FFBD59;
-    border-radius: 3px;
-
-    z-index: 1;
-
-    transform-origin: 4px 0px;
-
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
-        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
-        opacity 0.55s ease;
-}
-
-#menuToggle span:first-child {
-    transform-origin: 0% 0%;
-}
-
-#menuToggle span:nth-last-child(2) {
-    transform-origin: 0% 100%;
-}
-
-
-#menuToggle input:checked~span {
-    opacity: 1;
-    transform: rotate(45deg) translate(-2px, -1px);
-    background: #213644;
-}
-
-
-#menuToggle input:checked~span:nth-last-child(3) {
-    opacity: 0;
-    transform: rotate(0deg) scale(0.2, 0.2);
-}
-
-
-#menuToggle input:checked~span:nth-last-child(2) {
-    opacity: 1;
-    transform: rotate(-45deg) translate(0, -1px);
-}
-
-#menu {
-    position: absolute;
-    width: 300px;
-    margin: -100px 0 0 0;
-    padding: 25px;
-    padding-top: 125px;
-    right: -100px;
-    border-radius: 15px;
-
-    background: #ffffff;
-    list-style-type: none;
-    -webkit-font-smoothing: antialiased;
-
-    transform-origin: 0% 0%;
-    transform: translate(100%, 0);
-
-    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-}
-
-#menu li {
-    padding: 10px 0;
-    font-size: 22px;
-}
-
-
-#menuToggle input:checked~ul {
-    transform: none;
-    opacity: 1;
-}
-
-@media screen and (max-width: 768px) {
-    #menu {
-        transform: none;
-        opacity: 0;
-
-        transition: opacity 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    #search-icon {
+        display: block;
+        transition: display 0.5s ease;
     }
-}
-
-.hamburger_li {
-    color: #213644
-}
-
-.hamburger {
-    margin-bottom: 20px;
 
 }
+
+#search-icon {
+    display: none;
+}
+
+.badge {
+    width: 40px;
+    height: 40px;
+    color: #213644;
+    font-size: 1.2rem;
+    background-color: #FFBD59;
+    transition: width 0.5s ease;
+}
+
+
+
+@media screen and (max-width: 768px) {}
+
+
+
 
 header {
 
@@ -189,11 +95,6 @@ header {
 .logo {
     max-height: 330px;
     margin: 15px -70px 0 -70px
-}
-
-ul {
-    padding: 0;
-
 }
 
 

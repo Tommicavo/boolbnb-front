@@ -22,6 +22,8 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { faRectangleAd } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,7 +33,7 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import AppLoader from './components/AppLoader.vue'
 
 // Including fontawesome icon
-library.add(faXmark, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation, faCircleNotch, faRectangleAd);
+library.add(faXmark, faMagnifyingGlass, faSquareParking, faWifi, faKitchenSet, faTv, faWaterLadder, faUserTie, faBackward, faForward, faRotate, faHouse, faTriangleExclamation, faCircleNotch, faRectangleAd);
 
 // App
 const app = createApp(App);
