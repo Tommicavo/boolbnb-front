@@ -126,7 +126,7 @@ export default {
                             </ul>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Invia</button>
+                    <button type="submit" class="btn">Invia</button>
                 </div>
             </form>
         </div>
@@ -154,6 +154,14 @@ form {
 .btn {
     width: 100px;
     margin-right: 1rem;
+    background-color: #396E91;
+    color: #EBEEED;
+
+    &:hover {
+        background-color: #EBEEED;
+        color: #396E91;
+    }
+
 }
 
 .errorList {

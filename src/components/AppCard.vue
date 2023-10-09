@@ -33,7 +33,7 @@ export default {
     <div class="estate-card rounded">
         <figure class="rounded-top position-relative">
             <img :src="getImagePath" alt="Immagine">
-            <div class="heart"> &#10084;</div>
+            <i class="fa-solid fa-heart heart"></i>
             <div v-if="isEstateSponsored" class="sponsorMark">
                 <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
             </div>
