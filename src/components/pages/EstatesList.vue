@@ -35,6 +35,7 @@ export default {
             axios.post(endpoint, this.form)
                 .then(res => {
                     this.estates = res.data;
+                    console.log('RESULTS: ', this.estates);
                 })
                 .catch(err => { console.error(err) })
                 .then(() => { this.apiLoading = false })
@@ -82,7 +83,7 @@ export default {
         <!-- search address -->
         <form>
             <div class="row">
-                <div class="addresses px-0 mt-3 col-8 mx-auto">
+                <div class="addresses px-0 my-3 col-8 mx-auto">
                     <div class="d-flex align-items-center position-relative">
                         <input id="searchAddress" type="text" class="form-control"
                             placeholder="Inizia a scrivere un indirizzo..." v-model="form.place.address"
@@ -103,34 +104,18 @@ export default {
         </form>
 
         <AppLoader v-if="apiLoading" />
-
         <div v-else>
             <!-- Hide if empty -->
             <div v-if="estates.length" class="row 
-            row-cols-sm-1 justify-content-sm-center 
-                row-cols-md-2 justify-content-md-center 
-                row-cols-lg-4 justify-content-lg-start
-                row-cols-xl-6">
-
+            row-cols-sm-1 justify-content-center
+                row-cols-md-4
+                row-cols-lg-6">
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
-
-                <!-- Pagination Navbar -->
-                <!-- <nav>
-                    <ul class="pagination">
-                        <li v-for="element in estates.links" :key="element.label" class="page-item">
-                            <button :disabled="!element.url" :class="{ active: element.active }" class="page-link"
-                                v-html="element.label" @click="fetchestates(element.url)"></button>
-                        </li>
-                    </ul>
-                </nav> -->
-
             </div>
-
             <div v-else class="d-flex justify-content-center align-items-center mt-3">
                 <h1>Non ci sono progetti da visualizzare</h1>
             </div>
-
         </div>
     </main>
 </template>

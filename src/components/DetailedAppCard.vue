@@ -1,5 +1,5 @@
 <script>
-
+import axios from 'axios';
 import BasicMap from '@/components/BasicMap.vue';
 import ContactForm from './ContactForm.vue';
 
@@ -7,7 +7,10 @@ import ContactForm from './ContactForm.vue';
 export default {
     name: 'DetailedAppCard',
     data() {
-        return {}
+        return {
+            estate_id: '',
+            ip_address: '',
+        }
     },
     components: {
         ContactForm, BasicMap
@@ -22,6 +25,19 @@ export default {
         }
     },
     methods: {
+        sendVisit() {
+            const endpoint = 'http://127.0.0.1:8000/api/visits';
+            const data = {
+                estate_id: this.estate.id,
+                ip_address: this.ip_address
+            };
+            axios.post(endpoint, data)
+                .then(res => {
+                    const results = res.data;
+                    console.log('RESULTS: ', results);
+                })
+                .catch(err => { console.error(err) })
+        },
         getImagePath(image) {
             const url = image.url;
             return `http://127.0.0.1:8000/storage/${url}`;
@@ -45,34 +61,41 @@ export default {
             const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
             return out_date;
         }
+    },
+    mounted() {
+        axios.get('https://api.ipify.org?format=json')
+            .then(response => {
+                this.ip_address = response.data.ip;
+                this.sendVisit();
+            })
+            .catch(err => {
+                console.error("Failed to get IP", err);
+            });
     }
 }
 
 </script>
 
 <template>
-    <div v-if="estate" class="card mt-3">
-
-        <div class="card-header text-center position-relative">
-            <div class="headerLeft">
-                <RouterLink class="btn btn-info" :to="{ name: 'estates' }">
-                    <span><font-awesome-icon icon="fa-solid fa-house" /></span>
-                    <span class="mx-2">Home Page</span>
-                </RouterLink>
-            </div>
-            <div class="headerCenter d-flex justify-content-center align-items-center gap-3">
-                <button type="button" class="btn btn-primary" @click="$emit('newEstate', estate.prevId)">
+    <div v-if="estate" class="card my-3">
+        <div class="text-center position-relative">
+            <div class="headerCenter d-flex justify-content-between align-items-center m-2">
+                <button type="button" class="btn bt-slide" @click="$emit('newEstate', estate.prevId)">
                     <span><font-awesome-icon icon="fa-solid fa-backward" /></span>
-                    <span class="mx-2">Precedente</span>
+                    <span class="mx-2 d-none d-sm-inline">Precedente</span>
                 </button>
-                <button type="button" class="btn btn-primary" @click="$emit('newEstate', estate.nextId)">
-                    <span class="mx-2">Successivo</span>
+                <RouterLink class="btn bt-home" :to="{ name: 'estates' }">
+                    <span><font-awesome-icon icon="fa-solid fa-house" /></span>
+                    <span class="mx-2 d-none d-sm-inline">Home Page</span>
+                </RouterLink>
+                <button type="button" class="btn bt-slide" @click="$emit('newEstate', estate.nextId)">
+                    <span class="mx-2 d-none d-sm-inline">Successivo</span>
                     <span><font-awesome-icon icon="fa-solid fa-forward" /></span>
                 </button>
             </div>
         </div>
         <!-- images carousel -->
-        <div v-if="hasImages" id="imagesCarousel" class="carousel slide my-2">
+        <div v-if="hasImages" id="imagesCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <div v-for="image in estate.images" :key="image.id" class="carousel-item"
                     :class="estate.images[0].id == image.id ? 'active' : ''">
@@ -86,67 +109,59 @@ export default {
                 <span class="btn btn-primary"><font-awesome-icon icon="fa-solid fa-forward" /></span>
             </button>
         </div>
-
         <div class="card-body">
             <!-- title -->
             <div class="estateTitle">
                 <h2 class="text-center py-2">{{ estate.title }}</h2>
             </div>
-
             <!-- description -->
-            <div class="estateDescription">
+            <div class="estateDescription ms-2">
                 <div><strong>Descrizione</strong></div>
                 <p>{{ estate.description }}</p>
             </div>
-
-            <div class="card-body d-flex p-0 gap-3  my-3">
-                <div class="left">
-                    <div class="estateInfo row">
-                        <div>
-                            <span><strong>Stanze</strong></span>
-                            <span>: {{ estate.rooms }}</span>
-                        </div>
-                        <div>
-                            <span><strong>Camere</strong></span>
-                            <span>: {{ estate.beds }}</span>
-                        </div>
-                        <div>
-                            <span><strong>Bagni</strong></span>
-                            <span>: {{ estate.bathrooms }}</span>
-                        </div>
-                        <div>
-                            <span><strong>Superficie</strong></span>
-                            <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
-                        </div>
-                        <div>
-                            <span><strong>Prezzo</strong></span>
-                            <span>: {{ estate.price }} €</span>
-                        </div>
-                        <div>
-                            <span><strong>Creato il</strong></span>
-                            <span>: {{ formatDates(estate.created_at) }} </span>
-                        </div>
-                        <div>
-                            <span><strong>Ultima modifica</strong></span>
-                            <span>: {{ formatDates(estate.updated_at) }} </span>
-                        </div>
-                        <div v-if="estate.services" class="estateServices d-flex align-items-center">
-                            <span><strong>Servizi: </strong></span>
-                            <span v-for="service in estate.services" :key="service.id">
-                                <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
-                            </span>
-                        </div>
+            <div class="card-body d-flex p-0 gap-3 my-3">
+                <div class="left d-flex flex-column justify-content-between ms-2">
+                    <div>
+                        <span><strong>Stanze</strong></span>
+                        <span>: {{ estate.rooms }}</span>
+                    </div>
+                    <div>
+                        <span><strong>Camere</strong></span>
+                        <span>: {{ estate.beds }}</span>
+                    </div>
+                    <div>
+                        <span><strong>Bagni</strong></span>
+                        <span>: {{ estate.bathrooms }}</span>
+                    </div>
+                    <div>
+                        <span><strong>Superficie</strong></span>
+                        <span>: {{ estate.mq }} m<sup><small>2</small></sup></span>
+                    </div>
+                    <div>
+                        <span><strong>Prezzo</strong></span>
+                        <span>: {{ estate.price }} €</span>
+                    </div>
+                    <div>
+                        <span><strong>Creato il</strong></span>
+                        <span>: {{ formatDates(estate.created_at) }} </span>
+                    </div>
+                    <div>
+                        <span><strong>Ultima modifica</strong></span>
+                        <span>: {{ formatDates(estate.updated_at) }} </span>
+                    </div>
+                    <div v-if="estate.services" class="estateServices d-flex align-items-center">
+                        <span><strong>Servizi: </strong></span>
+                        <span v-for="service in estate.services" :key="service.id">
+                            <font-awesome-icon class="iconService" :icon="'fa-solid fa-' + service.icon" />
+                        </span>
                     </div>
                 </div>
                 <div class="right">
                     <ContactForm :estate_id="estate.id" />
-
                 </div>
             </div>
             <!-- services -->
-
             <BasicMap :estate="estate" />
-
         </div>
     </div>
 </template>
@@ -154,7 +169,7 @@ export default {
 <style lang="scss" scoped>
 @use '@/assets/scss/partials/vars' as *;
 
-#imagesCarousel .btn.btn-primary {
+#imagesCarousel .btn {
     font-size: 1.5rem;
     font-weight: bold;
     color: $logo-color;
@@ -168,11 +183,47 @@ export default {
     opacity: 1;
 }
 
+.bt-home {
+    background-color: $logo-color;
+    color: $bg-lightgrey;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: $bg-lightgrey;
+        color: $logo-color;
+    }
+}
+
+.bt-slide {
+    background-color: $darkBlue;
+    color: $bg-lightgrey;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: $lightGray;
+        color: $darkBlue;
+    }
+}
+
 .estateImg {
-    min-width: 420px;
-    max-width: 100%;
+    width: 100%;
     height: 500px;
     margin: 0 auto;
+    object-fit: cover;
+    border-radius: 0;
+
+    @media screen and (min-width: 992px) {
+        width: 700px;
+        border-radius: 10px;
+    }
+
+    @media screen and (min-width: 1200px) {
+        width: 850px;
+    }
+
+    @media screen and (min-width: 1400px) {
+        width: 1000px;
+    }
 }
 
 .iconService {
