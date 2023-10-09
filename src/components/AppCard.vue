@@ -40,7 +40,7 @@ export default {
                 </RouterLink>
             </div>
             <div class="mt-2">
-                <p><strong>Prezzo a Notte: </strong>{{ data.price }}</p>
+                <p><strong>Prezzo a Notte: </strong>{{ data.price }} €</p>
                 <p><strong>Indirizzo: </strong>{{ data.address }}</p>
             </div>
         </div>
