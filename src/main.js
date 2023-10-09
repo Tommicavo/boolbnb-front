@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
+// Font
+import '@fontsource/montserrat';
+
 // Router
 import { router } from './router'
 
