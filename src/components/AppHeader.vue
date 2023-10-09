@@ -29,7 +29,6 @@
 
 a {
     text-decoration: none;
-
     transition: color 0.3s ease;
 }
 
@@ -63,14 +62,16 @@ a {
     transition: width 0.5s ease;
 }
 
-
-
 @media screen and (max-width: 768px) {}
-
 
 header {
     height: 80px;
     font-weight: bold;
+    position: fixed;
+    z-index: 1;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    top: 0;
 }
 
 .logo {

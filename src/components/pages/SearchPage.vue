@@ -292,6 +292,10 @@ export default {
   position: relative;
 }
 
+.searchPage {
+  margin-top: 100px;
+}
+
 .appLoader {
   position: absolute;
   left: 0;
