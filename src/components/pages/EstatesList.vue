@@ -104,7 +104,6 @@ export default {
         </form>
 
         <AppLoader v-if="apiLoading" />
-
         <div v-else>
             <!-- Hide if empty -->
             <div v-if="estates.length" class="row 
