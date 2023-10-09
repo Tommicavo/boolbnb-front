@@ -108,7 +108,7 @@ export default {
         <div v-else>
             <!-- Hide if empty -->
             <div v-if="estates.length" class="row 
-            row-cols-sm-1 justify-content-sm-center
+            row-cols-sm-1 justify-content-center
                 row-cols-md-4
                 row-cols-lg-6">
                 <!-- Dynamic Card Here -->
