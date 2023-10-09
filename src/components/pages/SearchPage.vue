@@ -227,8 +227,7 @@ export default {
 
               <!-- Button -->
               <div class="d-flex align-items-center justify-content-center my-3">
-                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
-                  :disabled="isFilterReset">
+                <button id="resetFormBtn" type="button" class="btn" @click="initForm" :disabled="isFilterReset">
                   <span><font-awesome-icon icon="fa-solid fa-rotate" /> Reset</span>
                 </button>
               </div>
@@ -360,5 +359,16 @@ form {
   left: 0;
   right: 0;
   z-index: 1;
+}
+
+.btn {
+  background-color: #396E91;
+  color: #EBEEED;
+
+  &:hover {
+    background-color: #EBEEED;
+    color: #396E91;
+  }
+
 }
 </style>
