@@ -1,19 +1,12 @@
 <script></script>
 <template>
     <header class="d-flex align-items-center justify-content-between container-fluid">
-        <div class="flex-shrink-0 d-none d-sm-block">
-            <img src="../assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
-        </div>
-        <nav class="flex-grow-1 ms-4 ms-sm-0 mt-5">
-            <ul class="me-auto nav1 d-flex gap-4">
-                <li>
-                    <RouterLink class="nav-link active a1" :to="{ name: 'estates' }">Annunci</RouterLink>
-                </li>
-                <li>
-                    <RouterLink class="nav-link active" :to="{ name: 'search-page' }">Ricerca Avanzata</RouterLink>
-                </li>
-            </ul>
-        </nav>
+        <RouterLink class="nav-link active" :to="{ name: 'estates' }">
+            <div class="flex-shrink-0 d-none d-sm-block">
+                <img src="../assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
+            </div>
+        </RouterLink>
+
         <nav role='navigation'>
             <div id="menuToggle" class="hamburger">
                 <input type="checkbox" />
@@ -21,12 +14,12 @@
                 <span></span>
                 <span></span>
                 <ul id="menu">
-                    <a href="http://127.0.0.1:8000/register">
-                        <li class="hamburger_li">Registrati</li>
-                    </a>
-                    <a href="http://127.0.0.1:8000/login">
-                        <li class="hamburger_li">Accedi</li>
-                    </a>
+                    <li>
+                        <a href="http://127.0.0.1:8000/admin/estates">Area Personale</a>
+                    </li>
+                    <li>
+                        <RouterLink class="nav-link active" :to="{ name: 'search-page' }">Ricerca Avanzata</RouterLink>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -34,6 +27,142 @@
 </template>
 <style scoped lang="scss">
 @use'../assets/scss/partials/vars.scss';
+
+a {
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #FFBD59;
+}
+
+li {
+
+    transition: color 0.3s ease;
+}
+
+li:hover {
+
+    color: #FFBD59;
+}
+
+#menuToggle {
+    display: block;
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    z-index: 1;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+#menuToggle input {
+    display: block;
+    width: 40px;
+    height: 32px;
+    position: absolute;
+    top: -7px;
+    left: -5px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    z-index: 2;
+
+    -webkit-touch-callout: none;
+}
+
+
+#menuToggle span {
+    display: block;
+    width: 33px;
+    height: 4px;
+    margin-bottom: 5px;
+    position: relative;
+
+    background: #FFBD59;
+    border-radius: 3px;
+
+    z-index: 1;
+
+    transform-origin: 4px 0px;
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0),
+        opacity 0.55s ease;
+}
+
+#menuToggle span:first-child {
+    transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+}
+
+
+#menuToggle input:checked~span {
+    opacity: 1;
+    transform: rotate(45deg) translate(-2px, -1px);
+    background: #213644;
+}
+
+
+#menuToggle input:checked~span:nth-last-child(3) {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+
+#menuToggle input:checked~span:nth-last-child(2) {
+    opacity: 1;
+    transform: rotate(-45deg) translate(0, -1px);
+}
+
+#menu {
+    position: absolute;
+    width: 300px;
+    margin: -100px 0 0 0;
+    padding: 25px;
+    padding-top: 125px;
+    right: -100px;
+    border-radius: 15px;
+
+    background: #ffffff;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+
+    transform-origin: 0% 0%;
+    transform: translate(100%, 0);
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+}
+
+#menu li {
+    padding: 10px 0;
+    font-size: 22px;
+}
+
+
+#menuToggle input:checked~ul {
+    transform: none;
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    #menu {
+        transform: none;
+        opacity: 0;
+
+        transition: opacity 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+    }
+}
+
+.hamburger_li {
+    color: #213644
+}
 
 .hamburger {
     margin-bottom: 20px;
