@@ -9,6 +9,8 @@ export default {
             if (this.data.images[0]) {
                 const url = this.data.images[0].url;
                 return `http://127.0.0.1:8000/storage/${url}`;
+            } else {
+                return 'https://picsum.photos/200/300';
             }
         },
         isEstateSponsored(){
@@ -28,54 +30,94 @@ export default {
 </script>
 
 <template>
-    <div class="container d-flex justify-content-center">
-        <div class="card p-0 mt-5 m-1">
-            <div v-if="isEstateSponsored" class="sponsorMark">
-                <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
-            </div>
-            <figure>
-                <img :src="getImagePath" class="card-img-top" alt="...">
-            </figure>
-            <div class="card-body d-flex flex-column justify-content-between">
-                <div class="mb-2">
-                    <div class="heart" style:> &#10084;</div>
-                    <h5 class="card-title">{{ data.title }}</h5>
-                    <p class="card-text">{{ truncateText(data.description, 50) }}</p>
-                </div>
+    <div class="estate-card rounded">
+        <div v-if="isEstateSponsored" class="sponsorMark">
+            <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
+        </div>
+        <figure class="rounded-top position-relative">
+            <img :src="getImagePath" alt="Immagine">
+            <div class="heart"> &#10084;</div>
+        </figure>
+        <div class="estate-info">
+            <div class="d-flex justify-content-between align-items-start">
+                <h5 class="mb-0">{{ data.title }}</h5>
                 <!-- Show Button -->
-                <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary mx-3">
-                    Dettaglio
+                <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary">
+                    Dettagli
                 </RouterLink>
+            </div>
+            <div class="mt-2">
+                <p><strong>Prezzo a Notte: </strong>{{ data.price }} €</p>
+                <p><strong>Indirizzo: </strong>{{ data.address }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.card {
-    cursor: pointer;
-    overflow: hidden;
-    width: 100%;
+@use'../assets/scss/partials/vars.scss' as *;
 
-    img {
-        object-fit: cover;
+.estate-card {
+    height: 350px;
+    width: 350px;
+    border: 2px solid $bg-lightgrey;
+    margin: 10px;
+    padding: 0;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    figure {
+        height: 50%;
+        width: 100%;
+        overflow: hidden;
+
+        img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    .estate-info {
+        padding: 0 10px;
+
+        h5 {
+            font-size: 1.2rem;
+            color: $darkBlue;
+        }
+
+        p {
+            font-size: 1rem;
+            color: $darkGray;
+        }
+    }
+
+    .btn {
+        background-color: $logo-color;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #FF9C2E;
+        }
     }
 }
 
 .heart {
     width: 10px;
-    height: 15px;
+    height: 10px;
     position: absolute;
     top: 5px;
     right: 15px;
     opacity: 0.45;
-    fill: #FFBD59;
-}
 
-.heart:hover {
-    color: #FFBD59;
-    opacity: 1;
-    cursor: pointer;
+
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
 }
 
 .sponsorMark{

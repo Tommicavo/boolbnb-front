@@ -108,10 +108,9 @@ export default {
         <div v-else>
             <!-- Hide if empty -->
             <div v-if="estates.length" class="row 
-            row-cols-sm-1 justify-content-sm-center 
-                row-cols-md-2 justify-content-md-center 
-                row-cols-lg-4 justify-content-lg-start
-                row-cols-xl-6">
+            row-cols-sm-1 justify-content-sm-center
+                row-cols-md-4
+                row-cols-lg-6">
                 <!-- Dynamic Card Here -->
                 <AppCard v-for="estate in estates" :key="estate.id" :data="estate" />
             </div>
