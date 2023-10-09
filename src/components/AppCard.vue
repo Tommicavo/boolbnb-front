@@ -13,7 +13,7 @@ export default {
                 return 'https://picsum.photos/200/300';
             }
         },
-        isEstateSponsored(){
+        isEstateSponsored() {
             return this.data.endSponsor !== null;
         }
     },
@@ -31,12 +31,12 @@ export default {
 
 <template>
     <div class="estate-card rounded">
-        <div v-if="isEstateSponsored" class="sponsorMark">
-            <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
-        </div>
         <figure class="rounded-top position-relative">
             <img :src="getImagePath" alt="Immagine">
             <div class="heart"> &#10084;</div>
+            <div v-if="isEstateSponsored" class="sponsorMark">
+                <font-awesome-icon icon="fa-solid fa-rectangle-ad" />
+            </div>
         </figure>
         <div class="estate-info">
             <div class="d-flex justify-content-between align-items-start">
@@ -120,12 +120,12 @@ export default {
     }
 }
 
-.sponsorMark{
+.sponsorMark {
     width: 130px;
     height: 25px;
     background-color: gold;
     transform: rotate(-45deg);
-    translate: -35px 15px;
+    translate: -35px -155px;
     position: absolute;
     text-align: center;
     border: 2px solid black;
