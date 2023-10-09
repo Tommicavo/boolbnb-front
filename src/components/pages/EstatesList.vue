@@ -121,6 +121,10 @@ export default {
 </template>
 
 <style scoped lang="scss">
+form {
+    margin-top: 100px;
+}
+
 .suggestedAddresses {
     position: absolute;
     top: 0;

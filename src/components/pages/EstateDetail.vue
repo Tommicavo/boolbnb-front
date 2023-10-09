@@ -41,7 +41,7 @@ export default {
 </script>
 
 <template>
-  <div class="container">
+  <div class="container detail-section">
     <AppLoader v-if="apiLoading" />
     <div v-else>
       <DetailedAppCard v-if="estateOk" :estate="estate" @newEstate="fetchNewEstate" />
@@ -49,4 +49,8 @@ export default {
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.detail-section {
+  padding-top: 100px;
+}
+</style>
