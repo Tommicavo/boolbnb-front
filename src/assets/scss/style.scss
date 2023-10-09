@@ -1,5 +1,5 @@
 @use './partials/mixin';
-@use './partials/vars';
+@use './partials/vars' as *;
 @use './partials/resets';
 @use './partials/icons';
 @use './partials/searchPage';
@@ -7,6 +7,14 @@
 // Total
 * {
     font-family: 'Montserrat', sans-serif;
+}
+
+h5 {
+    font-weight: 600;
+}
+
+strong {
+    color: $darkGray;
 }
 
 // All the <a>

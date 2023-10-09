@@ -113,7 +113,6 @@ export default {
     right: 15px;
     opacity: 0.45;
 
-
     &:hover {
         opacity: 1;
         cursor: pointer;
