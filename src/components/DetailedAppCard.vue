@@ -1,5 +1,5 @@
 <script>
-
+import axios from 'axios';
 import BasicMap from '@/components/BasicMap.vue';
 import ContactForm from './ContactForm.vue';
 
@@ -7,7 +7,10 @@ import ContactForm from './ContactForm.vue';
 export default {
     name: 'DetailedAppCard',
     data() {
-        return {}
+        return {
+            estate_id: '',
+            ip_address: '',
+        }
     },
     components: {
         ContactForm, BasicMap
@@ -22,6 +25,19 @@ export default {
         }
     },
     methods: {
+        sendVisit() {
+            const endpoint = 'http://127.0.0.1:8000/api/visits';
+            const data = {
+                estate_id: this.estate.id,
+                ip_address: this.ip_address
+            };
+            axios.post(endpoint, data)
+                .then(res => {
+                    const results = res.data;
+                    console.log('RESULTS: ', results);
+                })
+                .catch(err => { console.error(err) })
+        },
         getImagePath(image) {
             const url = image.url;
             return `http://127.0.0.1:8000/storage/${url}`;
@@ -45,6 +61,16 @@ export default {
             const out_date = `${day}/${month}/${year} alle ${hours}:${minutes}`;
             return out_date;
         }
+    },
+    mounted() {
+        axios.get('https://api.ipify.org?format=json')
+            .then(response => {
+                this.ip_address = response.data.ip;
+                this.sendVisit();
+            })
+            .catch(err => {
+                console.error("Failed to get IP", err);
+            });
     }
 }
 

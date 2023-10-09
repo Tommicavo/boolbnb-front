@@ -24,7 +24,6 @@ export default {
         .then(res => {
           this.estate = res.data;
           this.estateOk = true;
-
         })
         .catch(err => { console.log(err) })
         .then(() => { this.apiLoading = false })
