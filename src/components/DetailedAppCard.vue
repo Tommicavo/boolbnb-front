@@ -166,13 +166,10 @@ export default {
                 </div>
                 <div class="right">
                     <ContactForm :estate_id="estate.id" />
-
                 </div>
             </div>
             <!-- services -->
-
             <BasicMap :estate="estate" />
-
         </div>
     </div>
 </template>
@@ -195,9 +192,22 @@ export default {
 }
 
 .estateImg {
-    width: 600px;
+    width: 100%;
     height: 500px;
     margin: 0 auto;
+    object-fit: cover;
+
+    @media screen and (min-width: 992px) {
+        width: 700px;
+    }
+
+    @media screen and (min-width: 1200px) {
+        width: 850px;
+    }
+
+    @media screen and (min-width: 1400px) {
+        width: 1000px;
+    }
 }
 
 .iconService {
