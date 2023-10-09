@@ -2,7 +2,7 @@
 <template>
     <header class="d-flex align-items-center justify-content-between container-fluid">
         <RouterLink class="nav-link active" :to="{ name: 'estates' }">
-            <div class="flex-shrink-0 d-none d-sm-block">
+            <div class="flex-shrink-0  d-sm-block">
                 <img src="../assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
             </div>
         </RouterLink>
@@ -31,7 +31,6 @@ a {
     text-decoration: none;
     transition: color 0.3s ease;
 }
-
 
 .badge {
     width: 40px;
@@ -72,7 +71,7 @@ header {
 }
 
 .logo {
-    max-height: 330px;
-    margin: 15px -70px 0 -70px
+    height: 50px;
+    width: auto;
 }
 </style>
