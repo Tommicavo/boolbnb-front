@@ -20,7 +20,8 @@ export default {
       addressTimeoutId: null,
       filtersTimeoutId: null,
       suggestedAddresses: [],
-      isAddressSelected: false
+      isAddressSelected: false,
+      apiLoading: false
     }
   },
   components: {},
@@ -62,6 +63,7 @@ export default {
         .catch(err => { console.error(err) })
     },
     sendForm() {
+      this.apiLoading = true;
       this.filteredEstates = [];
       const endpoint = 'http://127.0.0.1:8000/api/estates/filter';
       axios.post(endpoint, this.form)
@@ -70,6 +72,7 @@ export default {
           console.log('RESULTS: ', this.filteredEstates);
         })
         .catch(err => { console.error(err) })
+        .then(() => {this.apiLoading = false;})
     },
     fetchAddress(address) {
       const baseUri = 'https://api.tomtom.com/search/2/search/';
@@ -155,129 +158,132 @@ export default {
 </script>
 
 <template>
-  <section class="searchPage">
-    <div class="container">
-      <!-- Title -->
-      <h2 class="my-3">Ricerca Avanzata</h2>
-
-      <div class="card">
-        <div class="card-body">
-          <!-- SearchForm -->
-          <form @submit.prevent="sendForm">
-            <div class="row justify-content-center">
-              <!-- address -->
-              <div class="col-sm-12 col-lg-8 mb-3">
-                <div class="addresses">
-                  <label for="searchAddress" class="form-label">Cerca un indirizzo o una città</label>
-                  <div class="d-flex align-items-center position-relative">
-                    <input id="searchAddress" type="text" class="form-control"
-                      placeholder="Inizia a scrivere un indirizzo" v-model="form.place.address"
-                      @keyup="fetchAddress($event.target.value)" autocomplete="off">
-                    <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
-                        class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
+  <AppLoader v-if="apiLoading" />
+  <div v-else>
+    <section class="searchPage">
+      <div class="container">
+        <!-- Title -->
+        <h2 class="my-3">Ricerca Avanzata</h2>
+  
+        <div class="card">
+          <div class="card-body">
+            <!-- SearchForm -->
+            <form @submit.prevent="sendForm">
+              <div class="row justify-content-center">
+                <!-- address -->
+                <div class="col-sm-12 col-lg-8 mb-3">
+                  <div class="addresses">
+                    <label for="searchAddress" class="form-label">Cerca un indirizzo o una città</label>
+                    <div class="d-flex align-items-center position-relative">
+                      <input id="searchAddress" type="text" class="form-control"
+                        placeholder="Inizia a scrivere un indirizzo" v-model="form.place.address"
+                        @keyup="fetchAddress($event.target.value)" autocomplete="off">
+                      <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
+                          class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
+                    </div>
+                  </div>
+                  <div class="position-relative">
+                    <div class="suggestedAddresses">
+                      <ul class="list-group">
+                        <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
+                          class="liAddress list-group-item">
+                          <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-                <div class="position-relative">
-                  <div class="suggestedAddresses">
-                    <ul class="list-group">
-                      <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
-                        class="liAddress list-group-item">
-                        <div class="suggestedAddress">{{ address.address.freeformAddress }}</div>
-                      </li>
-                    </ul>
+  
+                <!-- radius -->
+                <div class="col-sm-6 col-lg-2 mb-3">
+                  <label for="range" class="form-label mb-3">Nel raggio di {{ form.radius }} Km</label>
+                  <input type="range" class="form-range" min="10" max="40" step="5" id="range" v-model="form.radius"
+                    @input="filtersChanged">
+                </div>
+  
+                <!-- min rooms -->
+                <div class="col-sm-3 col-lg-1 mb-3">
+                  <label for="minRooms" class="form-label">Stanze</label>
+                  <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms"
+                    @keyup="filtersChanged">
+                </div>
+  
+                <!-- min beds -->
+                <div class="col-sm-3 col-lg-1 mb-3">
+                  <label for="minBeds" class="form-label">Letti</label>
+                  <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds"
+                    @keyup="filtersChanged">
+                </div>
+  
+                <!-- services -->
+                <div class="col-sm-8 col-md-12 text-center mb-3">
+                  <h4 class="py-3">Seleziona i servizi che desideri</h4>
+                  <div v-for="service in services" :key="service.id" class="form-check form-check-inline">
+                    <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]"
+                      @change="servicesChanged">
+                    <label :for="service.label"><font-awesome-icon
+                        :class="['iconService', { 'iconSelected': form.services[service.label] }]"
+                        :icon="'fa-solid fa-' + service.icon" /></label>
                   </div>
                 </div>
-              </div>
-
-              <!-- radius -->
-              <div class="col-sm-6 col-lg-2 mb-3">
-                <label for="range" class="form-label mb-3">Nel raggio di {{ form.radius }} Km</label>
-                <input type="range" class="form-range" min="10" max="40" step="5" id="range" v-model="form.radius"
-                  @input="filtersChanged">
-              </div>
-
-              <!-- min rooms -->
-              <div class="col-sm-3 col-lg-1 mb-3">
-                <label for="minRooms" class="form-label">Stanze</label>
-                <input id="minRooms" type="tel" class="form-control" placeholder="Min. Stanze" v-model="form.minRooms"
-                  @keyup="filtersChanged">
-              </div>
-
-              <!-- min beds -->
-              <div class="col-sm-3 col-lg-1 mb-3">
-                <label for="minBeds" class="form-label">Letti</label>
-                <input id="minBeds" type="tel" class="form-control" placeholder="Min. Camere" v-model="form.minBeds"
-                  @keyup="filtersChanged">
-              </div>
-
-              <!-- services -->
-              <div class="col-sm-8 col-md-12 text-center mb-3">
-                <h4 class="py-3">Seleziona i servizi che desideri</h4>
-                <div v-for="service in services" :key="service.id" class="form-check form-check-inline">
-                  <input :id="service.label" class="btn-check" type="checkbox" v-model="form.services[service.label]"
-                    @change="servicesChanged">
-                  <label :for="service.label"><font-awesome-icon
-                      :class="['iconService', { 'iconSelected': form.services[service.label] }]"
-                      :icon="'fa-solid fa-' + service.icon" /></label>
+  
+                <!-- Button -->
+                <div class="d-flex align-items-center justify-content-center my-3">
+                  <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
+                    :disabled="isFilterReset">
+                    <span><font-awesome-icon icon="fa-solid fa-rotate" /> Reset</span>
+                  </button>
                 </div>
+  
+  
               </div>
-
-              <!-- Button -->
-              <div class="d-flex align-items-center justify-content-center my-3">
-                <button id="resetFormBtn" type="button" class="btn btn-warning" @click="initForm"
-                  :disabled="isFilterReset">
-                  <span><font-awesome-icon icon="fa-solid fa-rotate" /> Reset</span>
-                </button>
-              </div>
-
-
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
+  
+        <!-- Results -->
+        <div v-if="filteredEstatesReady" class="results">
+          <h2 class="my-2">Risultati</h2>
+  
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col" width="30%">Alloggio</th>
+                <th scope="col" width="10%">Prezzo</th>
+                <th scope="col" width="10%">Stanze</th>
+                <th scope="col" width="10%">Letti</th>
+                <th scope="col" width="30%">Servizi</th>
+                <th scope="col" width="10%">Distanza</th>
+                <th scope="col" width="10%">Scopri</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="estate in filteredEstates" :key="estate.id" height="50">
+                <td> {{ estate.title }} </td>
+                <td> {{ estate.price }} €</td>
+                <td> {{ estate.rooms }} </td>
+                <td> {{ estate.beds }} </td>
+                <td>
+                  <ul class="d-flex gap-2 align-items-center m-0 p-0">
+                    <li class="itemService" v-for="service in estate.services" :key="service.id">
+                      <font-awesome-icon class="iconService small" :icon="'fa-solid fa-' + service.icon" />
+                    </li>
+                  </ul>
+                </td>
+                <td> {{ printDistance(estate.distance) }} Km</td>
+                <td>
+                  <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }" class="btn btn-outline-primary">
+                    Info
+                  </RouterLink>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
       </div>
-
-      <!-- Results -->
-      <div v-if="filteredEstatesReady" class="results">
-        <h2 class="my-2">Risultati</h2>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col" width="30%">Alloggio</th>
-              <th scope="col" width="10%">Prezzo</th>
-              <th scope="col" width="10%">Stanze</th>
-              <th scope="col" width="10%">Letti</th>
-              <th scope="col" width="30%">Servizi</th>
-              <th scope="col" width="10%">Distanza</th>
-              <th scope="col" width="10%">Scopri</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="estate in filteredEstates" :key="estate.id" height="50">
-              <td> {{ estate.title }} </td>
-              <td> {{ estate.price }} €</td>
-              <td> {{ estate.rooms }} </td>
-              <td> {{ estate.beds }} </td>
-              <td>
-                <ul class="d-flex gap-2 align-items-center m-0 p-0">
-                  <li class="itemService" v-for="service in estate.services" :key="service.id">
-                    <font-awesome-icon class="iconService small" :icon="'fa-solid fa-' + service.icon" />
-                  </li>
-                </ul>
-              </td>
-              <td> {{ printDistance(estate.distance) }} Km</td>
-              <td>
-                <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }" class="btn btn-outline-primary">
-                  Info
-                </RouterLink>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <style lang="scss" scoped>
