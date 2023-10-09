@@ -8,17 +8,17 @@
         </RouterLink>
         <div class="right-nav d-flex">
             <RouterLink class="nav-link active me-2" :to="{ name: 'search-page' }">
-                <span class="badge d-flex align-items-center justify-content-center rounded-pill"><span
-                        id="search-icon">Ricerca
-                        avanzata</span><font-awesome-icon :icon="['fas', 'magnifying-glass']" /></span>
+                <span class="badge d-flex align-items-center justify-content-center rounded-pill">
+                    <span id="search-icon">Ricerca avanzata</span>
+                    <font-awesome-icon class="icon" :icon="['fas', 'magnifying-glass']" />
+                </span>
             </RouterLink>
 
-
             <a href="http://127.0.0.1:8000/admin/estates">
-                <span class="badge d-flex align-items-center justify-content-center rounded-pill"><span
-                        id="search-icon">Area
-                        personale</span>
-                    <font-awesome-icon icon="fa-solid fa-circle-user" /></span>
+                <span class="badge d-flex align-items-center justify-content-center rounded-pill">
+                    <span id="search-icon">Area personale</span>
+                    <font-awesome-icon class="icon" icon="fa-solid fa-circle-user" />
+                </span>
             </a>
         </div>
 
@@ -29,44 +29,37 @@
 
 a {
     text-decoration: none;
-
     transition: color 0.3s ease;
 }
 
-
-.badge:hover {
-    background-color: #FF9C2E;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-    width: 190px;
-    transition: width 0.5s ease;
-
-
-    #search-icon {
-        display: block;
-        transition: display 0.5s ease;
-        margin-right: 0.5rem;
-    }
-
-}
-
-#search-icon {
-    display: none;
-}
 
 .badge {
     width: 40px;
     height: 40px;
     color: #213644;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background-color: #FFBD59;
     transition: width 0.5s ease;
+
+    #search-icon {
+        display: none;
+    }
+
+    &:hover {
+        background-color: #FF9C2E;
+        cursor: pointer;
+        width: 190px;
+        transition: background-color 0.5s ease, width 0.5s ease;
+
+        #search-icon {
+            display: block;
+            margin-right: 0.5rem;
+        }
+    }
 }
 
 
-
 @media screen and (max-width: 768px) {}
-
 
 header {
     height: 80px;
