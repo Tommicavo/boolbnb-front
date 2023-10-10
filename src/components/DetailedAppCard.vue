@@ -79,7 +79,7 @@ export default {
 <template>
     <div v-if="estate" class="card my-3">
         <div class="text-center position-relative">
-            <div class="headerCenter d-flex justify-content-between align-items-center">
+            <div class="headerCenter d-flex justify-content-between align-items-center m-2">
                 <button type="button" class="btn bt-slide" @click="$emit('newEstate', estate.prevId)">
                     <span><font-awesome-icon icon="fa-solid fa-backward" /></span>
                     <span class="mx-2 d-none d-sm-inline">Precedente</span>
