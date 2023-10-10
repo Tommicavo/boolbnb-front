@@ -1,6 +1,6 @@
 <script></script>
 <template>
-    <header class="d-flex align-items-center justify-content-between container-fluid">
+    <header class="d-flex align-items-center justify-content-between container-fluid ps-4">
         <RouterLink class="nav-link active" :to="{ name: 'estates' }">
             <div class="flex-shrink-0  d-sm-block">
                 <img src="../assets/BOOLlogo.svg" alt="Logo BoolBnB" class="logo">
