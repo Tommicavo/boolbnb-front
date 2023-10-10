@@ -121,6 +121,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
+@use'../../assets/scss/partials/bootstrapCorrection.scss' as *;
+
 form {
     margin-top: 100px;
 }

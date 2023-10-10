@@ -135,7 +135,9 @@ export default {
 
 
 
-<style scoped>
+<style scoped lang="scss">
+@use'../assets/scss/partials/bootstrapCorrection.scss' as *;
+
 form {
     position: relative;
 }
