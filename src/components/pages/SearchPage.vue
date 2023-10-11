@@ -310,6 +310,9 @@ ul li {
 
 img {
   height: 70px;
+  width: 70px;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .table td {
