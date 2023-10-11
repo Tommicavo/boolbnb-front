@@ -75,7 +75,7 @@ export default {
     <div class="toast-container" :class="{ 'd-none': !showToast }">
         <div class="my-toast">
             <div class="my-toast-header d-flex justify-content-between" data-bs-theme="dark">
-                <strong class="me-auto">BoolBnB</strong>
+                <strong class="me-auto toast-title">BoolBnB</strong>
             </div>
             <p class="my-2">Il tuo messaggio è stato inviato con successo!</p>
         </div>
@@ -140,6 +140,11 @@ export default {
 
 form {
     position: relative;
+}
+
+.toast-title {
+    color: #FFBD59;
+
 }
 
 .appLoader {
