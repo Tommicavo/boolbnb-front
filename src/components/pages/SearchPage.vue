@@ -111,13 +111,18 @@ export default {
       this.sendForm();
     },
     autoSelectPlace(query) {
-      this.suggestedAddresses = [];
-      this.form.place.address = query.place.address;
-      this.form.place.lon = query.place.lon;
-      this.form.place.lat = query.place.lat;
-      document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
-      this.isAddressSelected = true;
-      this.sendForm();
+      if (query) {
+        this.suggestedAddresses = [];
+        this.form.place.address = query.place.address;
+        this.form.place.lon = query.place.lon;
+        this.form.place.lat = query.place.lat;
+        document.getElementById('searchAddress').setAttribute('readonly', 'readonly');
+        this.isAddressSelected = true;
+        this.sendForm();
+      }
+      else {
+        this.resetAddress();
+      }
     },
     filtersChanged() {
       clearTimeout(this.filtersTimeoutId);
