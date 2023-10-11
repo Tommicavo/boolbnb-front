@@ -408,8 +408,8 @@ form {
 
 }
 
-tbody tr:hover{
-  cursor: pointer;
+.table tbody tr:hover{
   --bs-table-accent-bg: rgba(255, 189, 89, 0.3);
+  --bs-table-hover-bg: rgba(255, 189, 89, 0.3);
 }
 </style>
