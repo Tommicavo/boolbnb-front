@@ -166,7 +166,7 @@ export default {
       <div class="card">
         <div class="card-body">
           <!-- SearchForm -->
-          <form @submit.prevent="sendForm">
+          <form method="POST" @submit.prevent="false">
             <div class="row justify-content-center">
               <!-- address -->
               <div class="col-sm-12 col-lg-8 mb-3">
@@ -181,7 +181,7 @@ export default {
                   </div>
                 </div>
                 <div class="position-relative">
-                  <div class="suggestedAddresses">
+                  <div v-if="!isAddressFieldEmpty" class="suggestedAddresses">
                     <ul class="list-group">
                       <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
                         class="liAddress list-group-item">

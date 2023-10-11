@@ -81,7 +81,7 @@ export default {
 <template>
     <main class="container">
         <!-- search address -->
-        <form>
+        <form method="POST" @submit.prevent="false">
             <div class="row">
                 <div class="addresses px-0 my-3 col-8 mx-auto">
                     <div class="d-flex align-items-center position-relative">
@@ -91,7 +91,7 @@ export default {
                     </div>
                 </div>
                 <div class="col-8 mx-auto position-relative">
-                    <div class="suggestedAddresses">
+                    <div v-if="!isAddressFieldEmpty" class="suggestedAddresses">
                         <ul class="list-group">
                             <li v-for="address in suggestedAddresses" :key="address.id" @click="selectPlace(address)"
                                 class="liAddress list-group-item">
