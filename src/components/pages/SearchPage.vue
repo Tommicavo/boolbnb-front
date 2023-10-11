@@ -176,8 +176,8 @@ export default {
                     <input id="searchAddress" type="text" class="form-control"
                       placeholder="Inizia a scrivere un indirizzo" v-model="form.place.address"
                       @keyup="fetchAddress($event.target.value)" autocomplete="off">
-                    <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon
-                        class="btn btn-danger closeIcon" icon="fa-solid fa-xmark" /></div>
+                    <div v-if="isAddressSelected" @click="resetAddress()"><font-awesome-icon class="btn closeIcon"
+                        icon="fa-solid fa-xmark" /></div>
                   </div>
                 </div>
                 <div class="position-relative">
@@ -269,8 +269,7 @@ export default {
                   </td>
                   <td> {{ printDistance(estate.distance) }} Km</td>
                   <td>
-                    <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }"
-                      class="btn btn-outline-primary">
+                    <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }" class="btn ">
                       Info
                     </RouterLink>
                   </td>
@@ -290,6 +289,10 @@ export default {
 <style lang="scss" scoped>
 @use'../../assets/scss/partials/bootstrapCorrection.scss';
 @use'../../assets/scss/partials/vars.scss' as *;
+
+ul li {
+  list-style-type: none;
+}
 
 .search {
   position: relative;
