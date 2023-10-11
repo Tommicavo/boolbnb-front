@@ -49,7 +49,9 @@ export default {
     }
   },
   methods: {
-
+    toEstateDetail(estateId) {
+      this.$router.push({ name: 'estate-detail', params: { id: estateId } });
+    },
     getImagePath(image) {
       const url = image.url;
       return `http://127.0.0.1:8000/storage/${url}`;
@@ -248,7 +250,7 @@ export default {
           <!-- Results -->
           <div v-if="filteredEstatesReady" class="results">
             <h2 class="my-2">Risultati</h2>
-            <table class="table">
+            <table class="table table-hover">
               <thead>
                 <tr>
                   <th scope="col" width="30%">Immagine</th>
@@ -258,11 +260,10 @@ export default {
                   <th scope="col" width="10%">Letti</th>
                   <th scope="col" width="30%">Servizi</th>
                   <th scope="col" width="10%">Distanza</th>
-                  <th scope="col" width="10%">Scopri</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="estate in  filteredEstates " :key="estate.id" height="50">
+                <tr v-for="estate in  filteredEstates " :key="estate.id" height="50" @click="toEstateDetail(estate.id)">
                   <td> <img
                       :src="estate.images[0] ? getImagePath(estate.images[0]) : 'https://www.frosinonecalcio.com/wp-content/uploads/2021/09/default-placeholder.png'"
                       alt="cover"></td>
@@ -278,11 +279,6 @@ export default {
                     </ul>
                   </td>
                   <td> {{ printDistance(estate.distance) }} Km</td>
-                  <td>
-                    <RouterLink :to="{ name: 'estate-detail', params: { id: estate.id } }" class="btn ">
-                      Info
-                    </RouterLink>
-                  </td>
                 </tr>
               </tbody>
             </table>
@@ -317,6 +313,10 @@ img {
 
 .table td {
   vertical-align: middle;
+}
+
+.table tr {
+  cursor: pointer;
 }
 
 .searchPage {
