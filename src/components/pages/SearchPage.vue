@@ -288,7 +288,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@use'../../assets/scss/partials/bootstrapCorrection.scss' as *;
+@use'../../assets/scss/partials/bootstrapCorrection.scss';
+@use'../../assets/scss/partials/vars.scss' as *;
 
 .search {
   position: relative;
@@ -325,8 +326,8 @@ form {
     cursor: pointer;
 
     &:hover {
-      color: #28a745;
-      border: 2px solid #28a745;
+      color: $logo-color;
+      border: 2px solid $logo-color;
       border-radius: 8px;
     }
   }
@@ -337,8 +338,8 @@ form {
 }
 
 .iconSelected {
-  color: #28a745;
-  border: 2px solid #28a745;
+  color: $logo-color;
+  border: 2px solid $logo-color;
   border-radius: 8px;
 }
 
