@@ -49,6 +49,12 @@ export default {
     }
   },
   methods: {
+
+    getImagePath(image) {
+      const url = image.url;
+      return `http://127.0.0.1:8000/storage/${url}`;
+    },
+
     fetchServices() {
       this.filteredEstates = [];
       const endpoint = 'http://127.0.0.1:8000/api/services';
@@ -245,6 +251,7 @@ export default {
             <table class="table">
               <thead>
                 <tr>
+                  <th scope="col" width="30%">Immagine</th>
                   <th scope="col" width="30%">Alloggio</th>
                   <th scope="col" width="10%">Prezzo</th>
                   <th scope="col" width="10%">Stanze</th>
@@ -255,14 +262,17 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="estate in filteredEstates" :key="estate.id" height="50">
+                <tr v-for="estate in  filteredEstates " :key="estate.id" height="50">
+                  <td> <img
+                      :src="estate.images[0] ? getImagePath(estate.images[0]) : 'https://www.frosinonecalcio.com/wp-content/uploads/2021/09/default-placeholder.png'"
+                      alt="cover"></td>
                   <td> {{ estate.title }} </td>
                   <td> {{ estate.price }} €</td>
                   <td> {{ estate.rooms }} </td>
                   <td> {{ estate.beds }} </td>
                   <td>
                     <ul class="d-flex gap-2 align-items-center m-0 p-0">
-                      <li class="itemService" v-for="service in estate.services" :key="service.id">
+                      <li class="itemService" v-for=" service  in  estate.services " :key="service.id">
                         <font-awesome-icon class="iconService small" :icon="'fa-solid fa-' + service.icon" />
                       </li>
                     </ul>
@@ -296,6 +306,14 @@ ul li {
 
 .search {
   position: relative;
+}
+
+img {
+  height: 70px;
+}
+
+.table td {
+  vertical-align: middle;
 }
 
 .searchPage {
