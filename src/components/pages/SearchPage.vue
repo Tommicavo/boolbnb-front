@@ -195,7 +195,7 @@ export default {
               <!-- radius -->
               <div class="col-sm-6 col-lg-2 mb-3">
                 <label for="range" class="form-label mb-3">Nel raggio di {{ form.radius }} Km</label>
-                <input type="range" class="form-range" min="10" max="40" step="5" id="range" v-model="form.radius"
+                <input type="range" class="" min="10" max="40" step="5" id="range" v-model="form.radius"
                   @input="filtersChanged">
               </div>
 
