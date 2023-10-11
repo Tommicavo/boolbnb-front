@@ -297,8 +297,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@use'../../assets/scss/partials/bootstrapCorrection.scss';
-@use'../../assets/scss/partials/vars.scss' as *;
+@use'@/assets/scss/partials/bootstrapCorrection.scss';
+@use'@/assets/scss/partials/vars.scss' as *;
 
 ul li {
   list-style-type: none;
@@ -401,5 +401,10 @@ form {
     color: #396E91;
   }
 
+}
+
+tbody tr:hover{
+  cursor: pointer;
+  --bs-table-accent-bg: rgba(255, 189, 89, 0.3);
 }
 </style>
