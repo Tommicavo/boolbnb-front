@@ -24,13 +24,13 @@ export default {
                 return value.substring(0, limit) + '...';
             }
             return value;
-        }
+        },
     }
 }
 </script>
 
 <template>
-    <div class="estate-card rounded">
+    <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="estate-card-link estate-card rounded">
         <figure class="rounded-top position-relative">
             <img :src="getImagePath" alt="Immagine">
             <i class="fa-solid fa-heart heart"></i>
@@ -41,21 +41,22 @@ export default {
         <div class="estate-info">
             <div class="d-flex justify-content-between align-items-start">
                 <h5 class="mb-0">{{ data.title }}</h5>
-                <!-- Show Button -->
-                <RouterLink :to="{ name: 'estate-detail', params: { id: data.id } }" class="btn btn-outline-primary">
-                    Dettagli
-                </RouterLink>
             </div>
             <div class="mt-2">
                 <p><strong>Prezzo a Notte: </strong>{{ data.price }} €</p>
                 <p><strong>Indirizzo: </strong>{{ data.address }}</p>
             </div>
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <style scoped lang="scss">
 @use'../assets/scss/partials/vars.scss' as *;
+
+.estate-card-link {
+    text-decoration: none;
+    color: inherit;
+}
 
 .estate-card {
     height: 350px;
@@ -65,6 +66,12 @@ export default {
     padding: 0;
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.3s;
+
+    &:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+    }
 
     figure {
         height: 50%;
